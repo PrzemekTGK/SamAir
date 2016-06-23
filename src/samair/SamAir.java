@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author PRZEMEK
+ * @author Przemek Stepien
  */
 public class SamAir {
     
