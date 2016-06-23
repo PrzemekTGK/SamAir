@@ -62,7 +62,7 @@ public class SamAir {
         }
         
         // Display all airplanes and pilots created
-        airports.getAirPorts().forEach((k, v) -> System.out.println(v));
+//        airports.getAirPorts().forEach((k, v) -> System.out.println(v));
 //        airCrafts.getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
 //        pilots.getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
 

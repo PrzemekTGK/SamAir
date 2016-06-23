@@ -51,15 +51,19 @@ public class AirPortDataBase {
                         airportAsList.get(city), airportAsList.get(country),
                         Float.parseFloat(airportAsList.get(longitude)),
                         Float.parseFloat(airportAsList.get(latitude)));
+                System.out.println(airport);
                
-                if (airport.getName().contains("Station") || airport.getName().contains("Train")) {
-                    continue;
-                } else {
+//                if (airport.getName().contains("Station") || airport.getName().contains("Train")) {
+//                    continue;
+//                } else 
+//                {
                     this.airPorts.put(("" + this.airPorts.size()), airport);
                     index = 0;
                     airportAsList.clear();                    
-                }
+//                }
             }
         }
+        
+        System.out.println(this.airPorts.size());
     }
 }
