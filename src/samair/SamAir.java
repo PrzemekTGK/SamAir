@@ -19,7 +19,7 @@ public class SamAir {
     private static FligthDataBase flights = new FligthDataBase(new File("airlines.txt"));
     private static UserDataBase users = new UserDataBase();
     private static PilotDataBase pilots = new PilotDataBase();
-    private static AirPortDataBase airports = new AirPortDataBase();
+    private static AirPortDataBase airPorts = new AirPortDataBase();
 
     /**
      * @param args the command line arguments
@@ -56,12 +56,12 @@ public class SamAir {
                         , airCrafts.generateAirCraft(airCrafts.readAirplanesFromCsvFile(
                                 new File("airbus.csv"))));
             }
-            airports.generateAirportsFromCsvFile(new File("airports.csv"));
+            airPorts.generateAirportsFromCsvFile(new File("airports.csv"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SamAir.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        flights.generateFlight(airports);
+        flights.generateFlight(airPorts, airCrafts, pilots);
         
         // Display all airplanes and pilots created
 //        airports.getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));

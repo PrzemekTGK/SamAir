@@ -17,16 +17,16 @@ import java.util.Scanner;
  */
 public class AirPortDataBase {
 
-    private HashMap<String, AirPort> airPorts;
+    private HashMap<Integer, AirPort> airPorts;
 
     public AirPortDataBase() {
-        this.airPorts = new HashMap<String, AirPort>();
+        this.airPorts = new HashMap<Integer, AirPort>();
     }
 
     /**
      * @return the airPorts
      */
-    public HashMap<String, AirPort> getAirPorts() {
+    public HashMap<Integer, AirPort> getAirPorts() {
         return airPorts;
     }
 
@@ -63,7 +63,7 @@ public class AirPortDataBase {
                         Float.parseFloat(airportAsList.get(longitude)),
                         Float.parseFloat(airportAsList.get(latitude)));
 
-                this.airPorts.put(("" + this.airPorts.size()), airport);
+                this.airPorts.put((this.airPorts.size()), airport);
                 index = 0;
                 airportAsList.clear();
             }

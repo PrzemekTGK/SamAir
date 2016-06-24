@@ -13,15 +13,17 @@ public class AirPlane implements AirCraft{
     private String model;
     private Pilot pilot;
     private short seatsCapacity;
+    private boolean active;
 
     public AirPlane() {
     }   
     
-    public AirPlane(String make, String model, Pilot pilot, short seatsCapacity) {
+    public AirPlane(String make, String model, Pilot pilot, short seatsCapacity, boolean active) {
         this.make = make;
         this.model = model;
         this.pilot = pilot;
         this.seatsCapacity = seatsCapacity;
+        this.active = active;
     }
     
     public void assignPilot(Pilot pilot){
@@ -49,6 +51,13 @@ public class AirPlane implements AirCraft{
     public Pilot getPilot() {
         return pilot;
     }
+    
+    /**
+     * @param pilot the pilot to set
+     */
+    public void setPilot(Pilot pilot) {
+        this.pilot = pilot;
+    }
 
     /**
      * @return the seatsCapacity
@@ -57,15 +66,27 @@ public class AirPlane implements AirCraft{
         return seatsCapacity;
     }
 
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    
     @Override
     public String toString() {
         return "AirPlane:" 
                 + "\nMake = " + make 
                 + "\nModel = " + model 
-                + "\nPilot = " + pilot 
-                + "\nSeats Capacity = " + seatsCapacity;
-    }
-    
-    
-    
+                + "\nPilot = " + pilot.getName()
+                + "\nSeats Capacity = " + seatsCapacity + "\n";
+    }    
+
 }

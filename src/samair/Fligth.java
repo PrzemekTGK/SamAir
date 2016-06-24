@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Fligth implements Journey {
 
-    private byte fligthDuration;
+    private String fligthDuration;
     private String airLine;
     private AirPort origin;
     private AirPort destination;
@@ -28,11 +28,12 @@ public class Fligth implements Journey {
     }
 
     public Fligth(String airLine, AirPort origin, AirPort destination,
-            AirCraft airCraftAssigned) {
+            AirCraft airCraftAssigned, String fligthDuration) {
         this.airLine = airLine;
         this.origin = origin;
         this.destination = destination;
         this.airCraftAssigned = airCraftAssigned;
+        this.fligthDuration = fligthDuration;
     }
 
     public void schedule(Date arrivalTime) {
@@ -41,31 +42,7 @@ public class Fligth implements Journey {
 
     public void schedule(Date arrivalTime, Date departureTime, Date dateOfFligth) {
 
-    }
-
-    private double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) 
-                + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) 
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist); // returns the arc cosine
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit.equalsIgnoreCase("KM")) {
-            dist = dist * 1.609344;
-        } else if (unit.equalsIgnoreCase("NT")) {
-            dist = dist * 0.8684;
-        }
-        return (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
-    }
+    }      
 
     /**
      * @return the origin
@@ -193,18 +170,31 @@ public class Fligth implements Journey {
         this.airLine = airLine;
     }
 
+    /**
+     * @return the fligthDuration
+     */
+    public String getFligthDuration() {
+        return fligthDuration;
+    }
+
+    /**
+     * @param fligthDuration the fligthDuration to set
+     */
+    public void setFligthDuration(String fligthDuration) {
+        this.fligthDuration = fligthDuration;
+    }
+
     @Override
     public String toString() {
         return "Flight:"
                 + "\nAir Lines = " + airLine
-                + "\nOrigin = " + origin
-                + "\nDestination = " + destination
+                + "\nOrigin " + origin
+                + "\nDestination " + destination
                 + "\nDeparture Time = " + departureTime
-                + "\nArrival Time=" + arrivalTime
+                + "\nArrival Time = " + arrivalTime
                 + "\nDate Of Flight = " + dateOfFligth
                 + "\nFlight Number = " + fligthNumber
                 + "\nAir Craft Assigned = " + airCraftAssigned
                 + "\nPilot assinged = " + ((AirPlane) airCraftAssigned).getPilot();
     }
-
 }

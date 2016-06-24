@@ -133,7 +133,7 @@ public class AirCraftDataBase {
         String model = airPlane.get(1);
         short seats = Short.parseShort(airPlane.get(randomGen.nextInt(airPlane.size() - 3) + 2));
         // Create AirCraft object based arguments setup before
-        AirCraft airCraft = new AirPlane(make, model, new Pilot(), seats);
+        AirCraft airCraft = new AirPlane(make, model, new Pilot(), seats, false);
         // New AirCraft object is returned
         return airCraft;
     }
