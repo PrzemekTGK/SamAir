@@ -57,7 +57,7 @@ public class FligthDataBase {
         // Random object created for random choice of specific elements
         Random randomGen = new Random(System.nanoTime());
         // Declared fields needed for Fligth object creation
-        String airlines = this.airlines.get(this.airlines.size() - 1);
+        String airlines = this.airlines.get(randomGen.nextInt(this.airlines.size() - 1));
         AirPort origin = null;
         AirPort destination = null;
         AirPlane airplane = null;

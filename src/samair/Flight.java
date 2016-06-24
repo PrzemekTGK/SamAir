@@ -10,65 +10,58 @@ import java.util.Date;
  *
  * @author Przemek Stepien
  */
-public class Fligth implements Journey {
-
-    private String fligthDuration;
+public class Flight implements Journey{
+    
     private String airLine;
-    private AirPort origin;
-    private AirPort destination;
+    private String origin;
+    private String destination;
     private Date departureTime;
     private Date arrivalTime;
-    private Date dateOfFligth;
-    private String fligthNumber;
+    private Date dateOfFlight;
+    private String flightNumber;
     private AirCraft airCraftAssigned;
     private SimpleDateFormat timeParser = new SimpleDateFormat("kk:mm");
     private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");
 
-    public Fligth() {
-    }
-
-    public Fligth(String airLine, AirPort origin, AirPort destination,
-            AirCraft airCraftAssigned, String fligthDuration) {
+    public Flight(String airLine,String origin, String destination) {
         this.airLine = airLine;
-        this.origin = origin;
+        this.origin = "Dublin";
         this.destination = destination;
-        this.airCraftAssigned = airCraftAssigned;
-        this.fligthDuration = fligthDuration;
     }
-
-    public void scheduleFligth(Date arrivalTime) {
-
+    
+    public void schedule(Date arrivalTime){
+        
     }
-
-    public void scheduleFligth(Date arrivalTime, Date departureTime, Date dateOfFligth) {
-
-    }      
-
+    
+    public void schedule(Date arrivalTime, Date departureTime){
+        
+    }   
+    
     /**
      * @return the origin
      */
-    public AirPort getOrigin() {
+    public String getOrigin() {
         return origin;
     }
 
     /**
      * @param origin the origin to set
      */
-    public void setOrigin(AirPort origin) {
+    public void setOrigin(String origin) {
         this.origin = origin;
     }
 
     /**
      * @return the destination
      */
-    public AirPort getDestination() {
+    public String getDestination() {
         return destination;
     }
 
     /**
      * @param destination the destination to set
      */
-    public void setDestination(AirPort destination) {
+    public void setDestination(String destination) {
         this.destination = destination;
     }
 
@@ -101,31 +94,31 @@ public class Fligth implements Journey {
     }
 
     /**
-     * @return the dateOfFligth
+     * @return the dateOfFlight
      */
-    public Date getDateOfFligth() {
-        return dateOfFligth;
+    public Date getDateOfFlight() {
+        return dateOfFlight;
     }
 
     /**
-     * @param dateOfFligth the dateOfFligth to set
+     * @param dateOfFlight the dateOfFlight to set
      */
-    public void setDateOfFligth(Date dateOfFligth) {
-        this.dateOfFligth = dateOfFligth;
+    public void setDateOfFlight(Date dateOfFlight) {
+        this.dateOfFlight = dateOfFlight;
     }
 
     /**
-     * @return the fligthNumber
+     * @return the flightNumber
      */
-    public String getFligthNumber() {
-        return fligthNumber;
+    public String getFlightNumber() {
+        return flightNumber;
     }
 
     /**
-     * @param fligthNumber the fligthNumber to set
+     * @param flightNumber the flightNumber to set
      */
-    public void setFligthNumber(String fligthNumber) {
-        this.fligthNumber = fligthNumber;
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     /**
@@ -154,7 +147,7 @@ public class Fligth implements Journey {
      */
     public SimpleDateFormat getDateParser() {
         return dateParser;
-    }
+    }        
 
     /**
      * @return the airLine
@@ -170,31 +163,19 @@ public class Fligth implements Journey {
         this.airLine = airLine;
     }
 
-    /**
-     * @return the fligthDuration
-     */
-    public String getFligthDuration() {
-        return fligthDuration;
-    }
-
-    /**
-     * @param fligthDuration the fligthDuration to set
-     */
-    public void setFligthDuration(String fligthDuration) {
-        this.fligthDuration = fligthDuration;
-    }
-
     @Override
     public String toString() {
-        return "Flight:"
-                + "\nAir Lines = " + airLine + "\n"
-                + "\nOrigin " + origin
-                + "\nDestination " + destination
-                + "\nDeparture Time = " + departureTime
-                + "\nArrival Time = " + arrivalTime
-                + "\nDate Of Flight = " + dateOfFligth
-                + "\nFlight Number = " + fligthNumber + "\n"
-                + "\nPilot assinged = " + ((AirPlane) airCraftAssigned).getPilot()
-                + "\nAir Craft Assigned " + airCraftAssigned;
+        return "Flight:" 
+                + "\nAir Lines = " + airLine 
+                + "\nOrigin = " + origin 
+                + "\nDestination = " + destination 
+                + "\nDeparture Time = " + departureTime 
+                + "\nArrival Time=" + arrivalTime 
+                + "\nDate Of Flight = " + dateOfFlight 
+                + "\nFlight Number = " + flightNumber 
+                + "\nAir Craft Assigned = " + airCraftAssigned
+                + "\nPilot assinged = " + ((AirPlane)airCraftAssigned).getPilot();
     }
+    
+    
 }
