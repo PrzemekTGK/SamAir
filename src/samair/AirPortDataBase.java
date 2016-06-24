@@ -46,24 +46,27 @@ public class AirPortDataBase {
 //            System.out.println(csvElement);
             airportAsList.add(csvElement);
             index++;
+
             if (index == 11) {
+                if (airportAsList.get(name).contains("Station")
+                        || airportAsList.get(name).contains("Train")
+                        || airportAsList.get(name).contains("Base")
+                        || airportAsList.get(name).contains("Transportation")
+                        || airportAsList.get(name).contains("Transit")
+                        || airportAsList.get(name).contains(" Centre")) {
+                    index = 0;
+                    airportAsList.clear();
+                    continue;
+                }
                 AirPort airport = new AirPort(airportAsList.get(name),
                         airportAsList.get(city), airportAsList.get(country),
                         Float.parseFloat(airportAsList.get(longitude)),
                         Float.parseFloat(airportAsList.get(latitude)));
-                System.out.println(airport);
-               
-//                if (airport.getName().contains("Station") || airport.getName().contains("Train")) {
-//                    continue;
-//                } else 
-//                {
-                    this.airPorts.put(("" + this.airPorts.size()), airport);
-                    index = 0;
-                    airportAsList.clear();                    
-//                }
+
+                this.airPorts.put(("" + this.airPorts.size()), airport);
+                index = 0;
+                airportAsList.clear();
             }
         }
-        
-        System.out.println(this.airPorts.size());
     }
 }

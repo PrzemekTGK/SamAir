@@ -17,14 +17,14 @@ public class Admin extends User {
         setPassword(password);
     }
 
-    // Creates a new Flight object
-    public Flight createFlight() {
-        Flight flight = null;
+    // Creates a new Fligth object
+    public Fligth createFlight() {
+        Fligth flight = null;
         return flight;
     }
 
     // Schedules a flight that's passed in as argument
-    public Flight scheduleFlight(Flight flight) {
+    public Fligth scheduleFlight(Fligth flight) {
         return flight;
     }
 
@@ -32,14 +32,14 @@ public class Admin extends User {
      * Adds a scheduled flight to the flight data base. Both flight and
      * database are passed as an argument
      */
-    public void addFlight(Flight flight, FlightDataBase fdb) {
+    public void addFlight(Fligth flight, FligthDataBase fdb) {
 
     }
 
     /*
      * Updates a scheduled flight
      */
-    public void updateFlight(Flight flight, FlightDataBase fdb) {
+    public void updateFlight(Fligth flight, FligthDataBase fdb) {
 
     }
 

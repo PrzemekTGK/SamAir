@@ -16,7 +16,7 @@ public class SamAir {
     
     // Declared pseudo data base objects to store various items neeeded for the program
     private static AirCraftDataBase airCrafts = new AirCraftDataBase();
-    private static FlightDataBase flights = new FlightDataBase();
+    private static FligthDataBase flights = new FligthDataBase(new File("airlines.txt"));
     private static UserDataBase users = new UserDataBase();
     private static PilotDataBase pilots = new PilotDataBase();
     private static AirPortDataBase airports = new AirPortDataBase();
@@ -56,13 +56,15 @@ public class SamAir {
                         , airCrafts.generateAirCraft(airCrafts.readAirplanesFromCsvFile(
                                 new File("airbus.csv"))));
             }
-            airports.generateAirportsFromCsvFile(new File("airports.txt"));
+            airports.generateAirportsFromCsvFile(new File("airports.csv"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SamAir.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        flights.generateFlight(airports);
+        
         // Display all airplanes and pilots created
-//        airports.getAirPorts().forEach((k, v) -> System.out.println(v));
+//        airports.getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
 //        airCrafts.getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
 //        pilots.getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
 
