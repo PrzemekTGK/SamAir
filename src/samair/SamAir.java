@@ -38,6 +38,11 @@ public class SamAir {
             System.out.println("Employee class not found");
             c.printStackTrace();
         }
+        
+        init.getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
+        init.getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
+        init.getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
+        init.getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
 
 
 //        logic.startProgram(users);
@@ -51,7 +56,7 @@ public class SamAir {
             out.writeObject(data);
             out.close();
             fileOut.close();
-            System.out.printf("Data.ser");
+            System.out.println("Data saved in Data.ser");
         } catch (IOException i) {
             i.printStackTrace();
         }

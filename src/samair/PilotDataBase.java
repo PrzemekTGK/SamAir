@@ -7,6 +7,7 @@ package samair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,7 +19,7 @@ import java.util.Scanner;
  *
  * @author Przemek Stepien
  */
-public class PilotDataBase {
+public class PilotDataBase implements Serializable {
     private HashMap<String, Pilot> pilots;
 
     public PilotDataBase() {
