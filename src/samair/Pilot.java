@@ -3,11 +3,13 @@
  */
 package samair;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Przemek Stepien
  */
-public class Pilot {
+public class Pilot implements Serializable{
     
     private String name;
     private String pilotID;

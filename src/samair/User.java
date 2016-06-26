@@ -3,11 +3,13 @@
  */
 package samair;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Przemek Stepien
  */
-public abstract class User {
+public abstract class User implements Serializable{
 
     private String userName;
     private String password;

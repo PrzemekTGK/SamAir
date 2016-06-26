@@ -1,10 +1,11 @@
 /*
- * FligthDataBase class is used to store all scheduled flights
+ * FlightDataBase class is used to store all scheduled flights
  */
 package samair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Przemek Stepien
  */
-public class FligthDataBase {
+public class FlightDataBase implements Serializable {
 
     // HashMap of upcoming flights
     private HashMap<String, Journey> scheduledFlights;
@@ -28,8 +29,9 @@ public class FligthDataBase {
      Constructor initializes the hashmap of flights to new instance of hashmap
      object. Initializes the ArrayList of airlines to new instance of ArrayList object
      and populates that list with list of airlines read in from a file passed as argument
-    */
-    public FligthDataBase(File file) {
+     */
+    public FlightDataBase(File file) {
+
         // Initialized HashMap and ArrayList to new instances of those objects
         this.scheduledFlights = new HashMap<String, Journey>();
         this.airlines = new ArrayList<String>();
@@ -39,7 +41,7 @@ public class FligthDataBase {
             // Read in the file
             scanFile = new Scanner(file);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FligthDataBase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FlightDataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         // Populate the list from with the content of the file
         while (scanFile.hasNextLine()) {
@@ -51,22 +53,23 @@ public class FligthDataBase {
      Generate a random flight. AirPortDataBase, AirCraftDataBase and PilotDataBase
      objects are passed in to this method to get access to all available airports,
      aircrafts and pilots need to generate the fligth.
-    */
-    public Fligth generateFlight(AirPortDataBase airports, AirCraftDataBase airCrafts,
+     */
+    public Flight generateFlight(AirPortDataBase airports, AirCraftDataBase airCrafts,
             PilotDataBase pilots) {
         // Random object created for random choice of specific elements
         Random randomGen = new Random(System.nanoTime());
-        // Declared fields needed for Fligth object creation
+        // Declared fields needed for Flight object creation
         String airlines = this.airlines.get(randomGen.nextInt(this.airlines.size() - 1));
         AirPort origin = null;
         AirPort destination = null;
         AirPlane airplane = null;
-        Fligth fligth = new Fligth();
-        String fligthDurationText= null;
+        Flight flight = new Flight();
+        String flightDurationText = null;
         double flightDurationFloat = 0;
+        long flightDurationMillis = 0;
 
         // Random Key selection to select a random airport
-        int randomKey = randomGen.nextInt(airports.getAirPorts().size()) + 1;
+        int randomKey = randomGen.nextInt(airports.getAirPorts().size() - 1);
 
         // Loop thru HashMap from AirPortDataBase object passed in as argument
         for (Entry entry : airports.getAirPorts().entrySet()) {
@@ -80,14 +83,17 @@ public class FligthDataBase {
             }
         }
 
-        // Calculate distance in Km between origin and destination airports
+        // Calculate flight distance with calculate method that's using haversine formula
         double distance = calculateDistance(origin.getLatitude(),
                 origin.getLongitude(), destination.getLatitude(), destination.getLongitude(), "KM");
         
         // Calculate fligth duration in floating point numbers
         flightDurationFloat = calculateFligthDurationInDecimal(distance);
-        // Convert fligth's duration from floating point numbers to actule hours and minutes
-        fligthDurationText = convertDecimalToHours(flightDurationFloat);
+        // Convert fligth duration from floating point numbers to 
+        // text represantation of actual hours and minutes
+        flightDurationText = convertDecimalToHours(flightDurationFloat);
+        // Convert duration to miliseconds
+        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);
 
         /*
          Select the pilot and an AirPlane for the fligth based on distance
@@ -95,12 +101,12 @@ public class FligthDataBase {
          Less or equal to 12 hours and more than 12 hours.
          */
         if (flightDurationFloat > 12) {
-            
+
             // Select pilot with rating higher than 5 for fligths longer than 12h
             Pilot pilot = null;
             for (Entry entry : pilots.getPilots().entrySet()) {
                 pilot = (Pilot) entry.getValue();
-                if (pilot.getRating() >  5) {
+                if (pilot.getRating() > 5) {
                     break;
                 }
             }
@@ -138,14 +144,14 @@ public class FligthDataBase {
                 }
             }
         }
-        
+
         // Create a flight wth all detailes aquired before
-        fligth = new Fligth(airlines, origin, destination, airplane, fligthDurationText);
-        System.out.println("\n" + fligth);
-        return fligth;
+        flight = new Flight(airlines, origin, destination, airplane,
+                flightDurationText, flightDurationMillis);
+        return flight;
     }
 
-    // Converts hours as flouting point number to actual hours and minutes
+    // Converts hours as floating point number to actual hours and minutes
     private String convertDecimalToHours(double decimalDuration) {
         // Convert hours as floating point to minutes as a floating points 
         double minutesAndSeconds = decimalDuration * 60;
@@ -160,12 +166,12 @@ public class FligthDataBase {
         String fligthDuration = hours + "h " + minutes + "m";
         return fligthDuration;
     }
-    
+
     // Calculates duration of fligth in hours as floating point numbers
     private float calculateFligthDurationInDecimal(double distance) {
         // Distance is passed in as argument and divided by speed of airplane (~800km/h)
-        float fligthDuration = (float) distance / 800;
-        return fligthDuration;
+        float flightDuration = (float) distance / 800;
+        return flightDuration;
     }
 
     // Using haversine formula to calculate the distance between airports

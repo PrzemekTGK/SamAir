@@ -3,10 +3,12 @@
  */
 package samair;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Przemek Stepien
  */
-public interface AirCraft {
+public interface AirCraft extends Serializable{
     
 }

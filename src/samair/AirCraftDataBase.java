@@ -5,6 +5,7 @@ package samair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Scanner;
  *
  * @author Przemek Stepien
  */
-public class AirCraftDataBase {
+public class AirCraftDataBase implements Serializable{
     private HashMap<String, AirCraft> airCrafts;
 
     public AirCraftDataBase() {

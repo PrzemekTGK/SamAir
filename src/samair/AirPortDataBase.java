@@ -7,6 +7,7 @@ package samair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ import java.util.Scanner;
  *
  * @author Przemek Stepien
  */
-public class AirPortDataBase {
+public class AirPortDataBase implements Serializable{
 
     private HashMap<Integer, AirPort> airPorts;
 

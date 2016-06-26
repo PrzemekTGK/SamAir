@@ -5,11 +5,13 @@
  */
 package samair;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Przemek Stepien
  */
-public class AirPort {
+public class AirPort implements Serializable{
     private String name;
     private String city;
     private String country;

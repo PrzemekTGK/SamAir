@@ -3,13 +3,14 @@
  */
 package samair;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Przemek Stepien
  */
-public class UserDataBase {
+public class UserDataBase implements Serializable{
     private HashMap<String, User> users;
 
     public UserDataBase() {
