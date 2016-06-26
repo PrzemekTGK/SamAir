@@ -22,8 +22,9 @@ public class SamAir {
     public static void main(String[] args) {
         // Logic object created to call its startProgram method
         Logic logic = new Logic();
+        // Initializer object declared 
         Initializer init = null;
-
+        // Initializer object loaded in from the file or created and saved to the file
         try {
             FileInputStream fileIn = new FileInputStream("Data.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -39,6 +40,7 @@ public class SamAir {
             c.printStackTrace();
         }
         
+        // Dummy data printed to the screen
         init.getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
         init.getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
         init.getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
