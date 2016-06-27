@@ -22,32 +22,15 @@ public class SamAir {
     public static void main(String[] args) {
         // Logic object created to call its startProgram method
         Logic logic = new Logic();
-        // Initializer object declared 
-        Initializer init = null;
-        // Initializer object loaded in from the file or created and saved to the file
-        try {
-            FileInputStream fileIn = new FileInputStream("Data.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            init = (Initializer) in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            init = new Initializer();
-            init.initialize(logic);
-            serialize(init);
-        } catch (ClassNotFoundException c) {
-            System.out.println("Employee class not found");
-            c.printStackTrace();
-        }
+        Initializer init = logic.init(logic);
         
         // Dummy data printed to the screen
-        init.getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
-        init.getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
-        init.getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
-        init.getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
+//        init.getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
+//        init.getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
+//        init.getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
+//        init.getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
 
-
-//        logic.startProgram(users);
+        logic.startProgram(init.getUsers());
     }
 
     public static void serialize(Serializable data) {

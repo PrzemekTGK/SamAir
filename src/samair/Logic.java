@@ -3,11 +3,15 @@
  */
 package samair;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import static samair.SamAir.serialize;
 
 /**
  *
@@ -21,6 +25,27 @@ public class Logic {
     private User admin = null;
     // Menus object for acces to various menus
     private Menus menus = new Menus();
+    private Initializer init = null;
+    
+    public Initializer init(Logic logic){
+        // Initializer object declared 
+        // Initializer object loaded in from the file or created and saved to the file
+        try {
+            FileInputStream fileIn = new FileInputStream("Data.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            init = (Initializer) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            init = new Initializer();
+            init.initialize(logic);
+            serialize(init);
+        } catch (ClassNotFoundException c) {
+            System.out.println("Employee class not found");
+            c.printStackTrace();
+        }
+        return init;
+    }
 
     /*
      Starting point of the program. Allows for admin/customer 
@@ -28,24 +53,19 @@ public class Logic {
      to be able to do either one.
      */
     public void startProgram(UserDataBase users) {
-
         // Scanner object for user input
         Scanner scanText = new Scanner(System.in);
         // Main program loop condition
         boolean userContinue = true;
-
         // Main program loop
         Label:
         while (userContinue) {
-
             // Displays main menu and asks user for input saved in an int.
             int mainMenuChoice = menus.displayMainMenu();
             // User chose an option for admin
             if (mainMenuChoice == 1) {
-
                 // Admin's password check condition
                 boolean invalidAdminPassword = true;
-
                 // Admins password check
                 do {
                     // User asked for amins password
@@ -63,11 +83,9 @@ public class Logic {
                                 + "or type in 'back' to go back.");
                     }
                 } while (invalidAdminPassword);
-
                 // Admins password accepeted and admin can register/login
                 // Admin is asked to choose an option that's saved in an int
                 int loginMenuChoice = menus.displayLoginMenu("Admin");
-
                 // Admin chose to register
                 if (loginMenuChoice == 1) {
                     users.getUsers().put(
@@ -76,13 +94,17 @@ public class Logic {
                     // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
+                    int userChoice = menus.displayAdminMenu(init.getFlights());
+                    if (userChoice == 4) {
+                        customer = null;
+                    }
+                    
                 }
                 // User chose an option for customer
             } else {
                 // Displays register/login menu for customer to choose.
                 // Customer's choice is saved in an int.
                 int loginMenuChoice = menus.displayLoginMenu("Customer");
-
                 // Customer chose to register
                 if (loginMenuChoice == 1) {
                     users.getUsers().put(generateUniqueKey(
@@ -91,6 +113,10 @@ public class Logic {
                     // Customer chose to login
                 } else {
                     customer = customerLogin(users.getUsers());
+                    int userChoice = menus.displayCustomerMenu(init.getFlights());
+                    if (userChoice == 4) {
+                        customer = null;
+                    }
                 }
             }
         }
