@@ -22,14 +22,14 @@ public class Initializer implements Serializable {
     private AirPortDataBase airPorts = new AirPortDataBase();
     private AirCraftDataBase airCrafts = new AirCraftDataBase();
     private FlightDataBase flights = new FlightDataBase(new File("airlines.txt"));
+    // Dummy users data
+    private User admin = new Admin("admin", "123");
+    private User customer = new Customer("Sam", "123");
     
     public UserDataBase initialize(Logic logic){
 
-        // Dummy users data
-        User admin = new Admin("admin", "123");
-        User customer = new Customer("Sam", "123");
-        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), admin);
-        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), customer);
+        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), getAdmin());
+        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), getCustomer());
 
         // Initializing Hashmaps with randomly created pilots, airplanes
         try {
@@ -60,15 +60,15 @@ public class Initializer implements Serializable {
         // Generate 100 random flights
         for (int i = 0; i < 100; i++) {
             Flight fligth = getFlights().generateFlight(getAirPorts(), getAirCrafts(), getPilots());        
-            ((Admin)admin).scheduleFlight(fligth);
-            ((Admin)admin).addFlight(fligth, getFlights());            
+            ((Admin)getAdmin()).scheduleFlight(fligth);
+            ((Admin)getAdmin()).addFlight(fligth, getFlights());            
         }
                
         // Display all airplanes and pilots created
-        getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
-        getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
-        getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
-        getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
+//        getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
+//        getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
+//        getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
+//        getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
         
         return getUsers();
     }
@@ -107,6 +107,18 @@ public class Initializer implements Serializable {
     public FlightDataBase getFlights() {
         return flights;
     }
-    
-    
+
+    /**
+     * @return the admin
+     */
+    public User getAdmin() {
+        return admin;
+    }
+
+    /**
+     * @return the customer
+     */
+    public User getCustomer() {
+        return customer;
+    }    
 }

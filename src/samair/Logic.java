@@ -4,14 +4,16 @@
 package samair;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import static samair.SamAir.serialize;
 
 /**
  *
@@ -25,10 +27,10 @@ public class Logic {
     private User admin = null;
     // Menus object for acces to various menus
     private Menus menus = new Menus();
+    // Initializer object declared 
     private Initializer init = null;
-    
-    public Initializer init(Logic logic){
-        // Initializer object declared 
+
+    public Initializer init(Logic logic) {
         // Initializer object loaded in from the file or created and saved to the file
         try {
             FileInputStream fileIn = new FileInputStream("Data.ser");
@@ -83,7 +85,7 @@ public class Logic {
                                 + "or type in 'back' to go back.");
                     }
                 } while (invalidAdminPassword);
-                // Admins password accepeted and admin can register/login
+                // Admin's password accepeted and admin can register/login
                 // Admin is asked to choose an option that's saved in an int
                 int loginMenuChoice = menus.displayLoginMenu("Admin");
                 // Admin chose to register
@@ -94,11 +96,20 @@ public class Logic {
                     // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
-                    int userChoice = menus.displayAdminMenu(init.getFlights());
-                    if (userChoice == 4) {
-                        customer = null;
-                    }
-                    
+                    boolean invalidInput = true;
+                    do {
+                        int userChoice = menus.displayAdminMenu(init.getFlights());
+
+                        if (userChoice == 1) {
+                        } else if (userChoice == 2) {
+                            ((Admin) init.getAdmin()).updateFlight(init.getFlights());
+                        } else if (userChoice == 3) {
+                            init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                        } else if (userChoice == 4) {
+                            admin = null;
+                            invalidInput = false;
+                        }
+                    } while (invalidInput);
                 }
                 // User chose an option for customer
             } else {
@@ -114,7 +125,12 @@ public class Logic {
                 } else {
                     customer = customerLogin(users.getUsers());
                     int userChoice = menus.displayCustomerMenu(init.getFlights());
-                    if (userChoice == 4) {
+
+                    if (userChoice == 1) {
+                    } else if (userChoice == 2) {
+                    } else if (userChoice == 3) {
+                        init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                    } else if (userChoice == 4) {
                         customer = null;
                     }
                 }
@@ -447,5 +463,19 @@ public class Logic {
         }
         // New key is returned
         return key;
+    }
+
+    public static void serialize(Serializable data) {
+        try {
+            FileOutputStream fileOut
+                    = new FileOutputStream("Data.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(data);
+            out.close();
+            fileOut.close();
+            System.out.println("Data saved in Data.ser");
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
 }

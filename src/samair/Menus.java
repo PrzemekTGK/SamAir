@@ -11,7 +11,7 @@ public class Menus {
     public Menus() {
     }
 
-    // 
+    // Displays main manu of and asks user to choose one of its options
     public int displayMainMenu() {
         boolean invalidInput = true;
         int userChoice = 0;
@@ -45,6 +45,8 @@ public class Menus {
         return userChoice;
     }
 
+    // Displays login menu either for admin or customer which
+    // is defined by the String user passed in as argument
     public int displayLoginMenu(String user) {
         boolean invalidInput = true;
         int userChoice = 0;
@@ -76,6 +78,7 @@ public class Menus {
         return userChoice;
     }
 
+    // Displays menu for logged in customer
     public int displayCustomerMenu(FlightDataBase fdb) {
         boolean invalidInput = true;
         Scanner scanText = new Scanner(System.in);
@@ -91,10 +94,13 @@ public class Menus {
 
             switch (scanText.nextLine()) {
                 case "1":
+                    userChoice = 1;
                     break;
                 case "2":
+                    userChoice = 2;
                     break;
                 case "3":
+                    userChoice = 3;
                     fdb.getScheduledFlights().forEach((k, v) -> System.out.println(v));
                     break;
                 case "4":
@@ -109,12 +115,10 @@ public class Menus {
         return userChoice;
     }
 
+    // Displays menu for logged in admin
     public int displayAdminMenu(FlightDataBase fdb) {
-        boolean invalidInput = true;
         Scanner scanText = new Scanner(System.in);
-        int userChoice = 0;
-
-        do {
+        int userChoice = 0;        
             System.out.print("Please select:"
                     + "\n1. Create Fligth"
                     + "\n2. Update Flight"
@@ -124,21 +128,21 @@ public class Menus {
 
             switch (scanText.nextLine()) {
                 case "1":
+                    userChoice = 1;
                     break;
                 case "2":
+                    userChoice = 2;
                     break;
                 case "3":
-                    fdb.getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                    userChoice = 3;                   
                     break;
                 case "4":
                     userChoice = 4;
-                    invalidInput = false;
                     break;
                 default:
                     System.out.println("Invalid Input");
                     System.out.print(": ");
             }
-        } while (invalidInput);
         return userChoice;
     }
 }

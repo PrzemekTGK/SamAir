@@ -3,6 +3,7 @@
  */
 package samair;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,11 +18,12 @@ public class Flight implements Journey {
     private String airLine;
     private AirPort origin;
     private AirPort destination;
-    private Date arrivalTime;
-    private Date departureTime;
+    private Date dateOfFlight;
+    private Time arrivalTime;
+    private Time departureTime;
     private String flightNumber;
     private AirCraft airCraftAssigned;
-    private SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+    private SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");
 
     public Flight() {
@@ -38,18 +40,22 @@ public class Flight implements Journey {
     }
 
     // Schedule a created flight
-    public void scheduleFlight(Date dateOfFligth, Date arrivalTime) {
-        this.departureTime = dateOfFligth;
+    public void scheduleFlight(Date dateOfFlight, Time departureTime, Time arrivalTime) {
+        this.dateOfFlight = dateOfFlight;
+        this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
     }
 
-    // Update a created and scheduled fligth
-    public void scheduleFlight(Date arrivalTime) {
+    // Update a created, scheduled and active fligth
+    public void scheduleFlight(Time arrivalTime) {
         this.setArrivalTime(arrivalTime);
         System.gc();
     }
-
     
+    // Update a created and scheduled but not active flight
+    public void scheduleFlight(Date departureTime, long flightDuration){
+        
+    }
     
     /**
      * @return the origin
@@ -89,7 +95,7 @@ public class Flight implements Journey {
     /**
      * @param arrivalTime the arrivalTime to set
      */
-    public void setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(Time arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
@@ -103,7 +109,7 @@ public class Flight implements Journey {
     /**
      * @param departureTime the departureTime to set
      */
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(Time departureTime) {
         this.departureTime = departureTime;
     }
 
@@ -191,13 +197,21 @@ public class Flight implements Journey {
         this.flightDurationInMilliseconds = flightDurationInMilliseconds;
     }
 
+    /**
+     * @return the dateOfFlight
+     */
+    public Date getDateOfFlight() {
+        return dateOfFlight;
+    }
+    
     @Override
     public String toString() {
-        return "=============================================="
+        return "========================================================="
                 + "\nFlight:"
                 + "\nAir Lines - " + airLine + "\n"
                 + "\nOrigin " + origin
                 + "\nDestination " + destination
+                + "\nDate of Flight = " + dateParser.format(getDateOfFlight())
                 + "\nDeparture Time = " + timeParser.format(departureTime)
                 + "\nArrival Time = " + timeParser.format(arrivalTime)
                 + "\nFlight Duration = " + flightDuration
