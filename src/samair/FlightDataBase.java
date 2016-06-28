@@ -22,19 +22,19 @@ public class FlightDataBase implements Serializable {
 
     // HashMap of upcoming flights
     private HashMap<String, Journey> scheduledFlights;
-    // ArrayList of airlines
-    private ArrayList<String> airlines;
+    // ArrayList of airLines
+    private ArrayList<String> airLines;
 
     /* 
      Constructor initializes the hashmap of flights to new instance of hashmap
-     object. Initializes the ArrayList of airlines to new instance of ArrayList object
-     and populates that list with list of airlines read in from a file passed as argument
+     object. Initializes the ArrayList of airLines to new instance of ArrayList object
+     and populates that list with list of airLines read in from a file passed as argument
      */
     public FlightDataBase(File file) {
 
         // Initialized HashMap and ArrayList to new instances of those objects
         this.scheduledFlights = new HashMap<String, Journey>();
-        this.airlines = new ArrayList<String>();
+        this.airLines = new ArrayList<String>();
         // Declared Scanner object refernce vatiable
         Scanner scanFile = null;
         try {
@@ -45,7 +45,7 @@ public class FlightDataBase implements Serializable {
         }
         // Populate the list from with the content of the file
         while (scanFile.hasNextLine()) {
-            this.airlines.add(scanFile.nextLine());
+            this.airLines.add(scanFile.nextLine());
         }
     }
 
@@ -59,7 +59,7 @@ public class FlightDataBase implements Serializable {
         // Random object created for random choice of specific elements
         Random randomGen = new Random(System.nanoTime());
         // Declared fields needed for Flight object creation
-        String airlines = this.airlines.get(randomGen.nextInt(this.airlines.size() - 1));
+        String airlines = this.getAirlines().get(randomGen.nextInt(this.getAirlines().size() - 1));
         AirPort origin = null;
         AirPort destination = null;
         AirPlane airplane = null;
@@ -93,15 +93,22 @@ public class FlightDataBase implements Serializable {
         // text represantation of actual hours and minutes
         flightDurationText = convertDecimalToHours(flightDurationFloat);
         // Convert duration to miliseconds
-        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);
+        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);        
 
-        /*
-         Select the pilot and an AirPlane for the fligth based on distance
-         between origin and destination. Fligths are split in 2 categories:
-         Less or equal to 12 hours and more than 12 hours.
-         */
+        // Create a flight wth all detailes aquired before
+        flight = new Flight(airlines, origin, destination, airplane,
+                flightDurationText, flightDurationMillis);
+        return flight;
+    }
+    
+    /*
+     Select the pilot and an AirPlane for the fligth based on distance
+     between origin and destination. Fligths are split in 2 categories:
+     Less or equal to 12 hours and more than 12 hours.
+     */
+    protected AirCraft setAirCraft(AirCraft airplane, AirCraftDataBase airCrafts,
+            PilotDataBase pilots, int flightDurationFloat){
         if (flightDurationFloat > 12) {
-
             // Select pilot with rating higher than 5 for fligths longer than 12h
             Pilot pilot = null;
             for (Entry entry : pilots.getPilots().entrySet()) {
@@ -118,7 +125,7 @@ public class FlightDataBase implements Serializable {
                         || ((AirPlane) entry.getValue()).getModel().contains("380"))
                         && !((AirPlane) entry.getValue()).isActive()) {
                     airplane = (AirPlane) entry.getValue();
-                    airplane.setPilot(pilot);
+                    ((AirPlane)airplane).setPilot(pilot);
                     break;
                 }
             }
@@ -139,20 +146,16 @@ public class FlightDataBase implements Serializable {
                         && !((AirPlane) entry.getValue()).getModel().contains("380"))
                         && !((AirPlane) entry.getValue()).isActive()) {
                     airplane = (AirPlane) entry.getValue();
-                    airplane.setPilot(pilot);
+                    ((AirPlane)airplane).setPilot(pilot);
                     break;
                 }
             }
         }
-
-        // Create a flight wth all detailes aquired before
-        flight = new Flight(airlines, origin, destination, airplane,
-                flightDurationText, flightDurationMillis);
-        return flight;
+        return airplane;
     }
 
     // Converts hours as floating point number to actual hours and minutes
-    private String convertDecimalToHours(double decimalDuration) {
+    protected String convertDecimalToHours(double decimalDuration) {
         // Convert hours as floating point to minutes as a floating points 
         double minutesAndSeconds = decimalDuration * 60;
         // Round minutes to full nummber and convert to int to remove floating point
@@ -168,7 +171,7 @@ public class FlightDataBase implements Serializable {
     }
 
     // Calculates duration of fligth in hours as floating point numbers
-    private float calculateFligthDurationInDecimal(double distance) {
+    protected float calculateFligthDurationInDecimal(double distance) {
         // Distance is passed in as argument and divided by speed of airplane (~800km/h)
         float flightDuration = (float) distance / 800;
         return flightDuration;
@@ -176,7 +179,7 @@ public class FlightDataBase implements Serializable {
 
     // Using haversine formula to calculate the distance between airports
     // Mathod aquired from MobiTechTutor.
-    private double calculateDistance(double lat1, double lon1, double lat2,
+    protected double calculateDistance(double lat1, double lon1, double lat2,
             double lon2, String unit) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
@@ -209,4 +212,11 @@ public class FlightDataBase implements Serializable {
     public HashMap<String, Journey> getScheduledFlights() {
         return scheduledFlights;
     }
+
+    /**
+     * @return the airLines
+     */
+    public ArrayList<String> getAirlines() {
+        return airLines;
+    }   
 }

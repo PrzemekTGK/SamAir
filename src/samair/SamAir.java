@@ -15,10 +15,7 @@ public class SamAir {
     public static void main(String[] args) {
         // Logic object created to call its startProgram method
         Logic logic = new Logic();
-        Initializer init = logic.init(logic);
-        
-        ((Admin) init.getAdmin()).updateFlight(init.getFlights());
-        
+        Initializer init = logic.init(logic);        
         
         // Dummy data printed to the screen
 //        init.getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
@@ -26,7 +23,6 @@ public class SamAir {
 //        init.getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
 //        init.getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
 
-//        logic.startProgram(init.getUsers());
+        logic.startProgram(init.getUsers());
     }
-
 }

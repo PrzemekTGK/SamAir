@@ -14,7 +14,8 @@ public abstract class User implements Serializable{
     private String userName;
     private String password;
     
-    void viewFlights(){
+    void viewFlights(FlightDataBase fdb){
+        fdb.getScheduledFlights().forEach((k,v) -> System.out.println(v));
     };
     
     /**

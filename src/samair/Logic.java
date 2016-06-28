@@ -101,6 +101,7 @@ public class Logic {
                         int userChoice = menus.displayAdminMenu(init.getFlights());
 
                         if (userChoice == 1) {
+                            ((Admin) init.getAdmin()).createFlight(init.getAirPorts(), init.getFlights(), init.getAirCrafts(), init.getPilots());
                         } else if (userChoice == 2) {
                             ((Admin) init.getAdmin()).updateFlight(init.getFlights());
                         } else if (userChoice == 3) {
@@ -111,7 +112,7 @@ public class Logic {
                         }
                     } while (invalidInput);
                 }
-                // User chose an option for customer
+            // User chose an option for customer
             } else {
                 // Displays register/login menu for customer to choose.
                 // Customer's choice is saved in an int.

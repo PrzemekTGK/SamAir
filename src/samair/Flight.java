@@ -46,7 +46,7 @@ public class Flight implements Journey {
         this.arrivalTime = arrivalTime;
     }
 
-    // Update a created, scheduled and active fligth
+    // Update a created, scheduled andTime arrivalTime)  active fligth
     public void scheduleFlight(Time arrivalTime) {
         this.setArrivalTime(arrivalTime);
         System.gc();
