@@ -25,7 +25,6 @@ public class Initializer implements Serializable {
     private User customer = new Customer("Sam", "123");
     
     public UserDataBase initialize(Logic logic){
-
         getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getAdmin());
         getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getCustomer());
 
