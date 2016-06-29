@@ -35,6 +35,7 @@ public class Admin extends User {
      * @param fdb
      * @param acdb
      * @param pdb 
+     * All parameters are used to get access to certain databases
      */
     public Flight createFlight(AirPortDataBase adb, FlightDataBase fdb, AirCraftDataBase acdb,
             PilotDataBase pdb) {
@@ -139,7 +140,6 @@ public class Admin extends User {
         }
         return originAirPort;
     }
-
 
     /**
      * Asks user to select the destination AirPort for the flight to be created.

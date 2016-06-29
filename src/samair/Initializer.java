@@ -25,8 +25,8 @@ public class Initializer implements Serializable {
     private User customer = new Customer("Sam", "123");
     
     public UserDataBase initialize(Logic logic){
-        getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getAdmin());
-        getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getCustomer());
+        getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getAdmin());
+        getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getCustomer());
 
         // Initializing Hashmaps with randomly created pilots, airplanes
         try {
@@ -40,12 +40,12 @@ public class Initializer implements Serializable {
             }
             // Create 50 random Beoing airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCraftsDataBase().getAirCrafts().put(logic.generateUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
+                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
                         new File("boeing.csv"))));
             }
             // Create 50 random Airbus airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCraftsDataBase().getAirCrafts().put(logic.generateUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
+                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
                         new File("airbus.csv"))));
             }
             

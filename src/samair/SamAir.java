@@ -17,7 +17,7 @@ public class SamAir {
         // Logic object created to call its startProgram method
         Logic logic = new Logic();
         // Initiliaze everything
-        Initializer init = logic.init(logic);
+        Initializer init = logic.init();
         // Start the program
         logic.startProgram(init.getUsersDataBase());
     }

@@ -24,11 +24,13 @@ public class FlightDataBase implements Serializable {
     private HashMap<String, Journey> scheduledFlights;
     // ArrayList of airLines
     private ArrayList<String> airLines;
-
-    /* 
-     Constructor initializes the hashmap of flights to new instance of hashmap
-     object. Initializes the ArrayList of airLines to new instance of ArrayList object
-     and populates that list with list of airLines read in from a file passed as argument
+    
+    /**
+     * Constructor initializes the hashmap of flights to new instance of hashmap
+     * object. Initializes the ArrayList of airLines to new instance of ArrayList object
+     * and populates that list with list of airLines read in from a file passed as argument
+     * @param file is used to pass the file with list of airlines that are to be
+     * put into ArrayList
      */
     public FlightDataBase(File file) {
 
