@@ -1,5 +1,5 @@
 /*
- *
+ * Tagging interface for all Journey like classes
  */
 package samair;
 

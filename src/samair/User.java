@@ -1,5 +1,5 @@
 /*
- *
+ * Abstract Parent class for User like classes 
  */
 package samair;
 

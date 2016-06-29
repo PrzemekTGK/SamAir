@@ -1,5 +1,5 @@
 /*
- *
+ * Pseudo database class storing all AirCraft objects
  */
 package samair;
 

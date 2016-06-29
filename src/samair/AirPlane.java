@@ -1,5 +1,5 @@
 /*
- *
+ * AirPlane object class storing all the details about the airplane for the flight
  */
 package samair;
 
@@ -25,12 +25,7 @@ public class AirPlane implements AirCraft{
         this.seatsCapacity = seatsCapacity;
         this.active = active;
     }
-    
-    public void assignPilot(Pilot pilot){
-        
-    }
-   
-
+  
     /**
      * @return the make
      */

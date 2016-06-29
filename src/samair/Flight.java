@@ -1,5 +1,5 @@
 /*
- *
+ * Flight class stroing all the info about the flight
  */
 package samair;
 
@@ -46,15 +46,16 @@ public class Flight implements Journey {
         this.arrivalTime = arrivalTime;
     }
 
-    // Update a created, scheduled andTime arrivalTime)  active fligth
+    // Update a created, scheduled and active fligth
     public void scheduleFlight(Time arrivalTime) {
         this.setArrivalTime(arrivalTime);
         System.gc();
     }
     
     // Update a created and scheduled but not active flight
-    public void scheduleFlight(Date departureTime, long flightDuration){
-        
+    public void scheduleFlight(Time departureTime, long flightDuration){
+        this.departureTime = departureTime;
+        this.flightDurationInMilliseconds = flightDuration;
     }
     
     /**

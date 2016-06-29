@@ -93,7 +93,7 @@ public class Logic {
                     users.getUsers().put(
                             generateUniqueKey(users.getUsers()),
                             registerAdmin(users.getUsers()));
-                    // Admin chose to login
+                // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
                     boolean invalidInput = true;
@@ -101,11 +101,14 @@ public class Logic {
                         int userChoice = menus.displayAdminMenu(init.getFlights());
 
                         if (userChoice == 1) {
-                            ((Admin) init.getAdmin()).createFlight(init.getAirPorts(), init.getFlights(), init.getAirCrafts(), init.getPilots());
+                            ((Admin) init.getAdmin()).addFlight(((Admin) 
+                                    init.getAdmin()).createFlight(init.getAirPorts(),
+                                            init.getFlights(), init.getAirCrafts(),
+                                            init.getPilots()), init.getFlights());;
                         } else if (userChoice == 2) {
                             ((Admin) init.getAdmin()).updateFlight(init.getFlights());
                         } else if (userChoice == 3) {
-                            init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                            admin.viewFlights(init.getFlights());
                         } else if (userChoice == 4) {
                             admin = null;
                             invalidInput = false;
@@ -128,9 +131,11 @@ public class Logic {
                     int userChoice = menus.displayCustomerMenu(init.getFlights());
 
                     if (userChoice == 1) {
+                        // TODO: Functionality to book a specific flight
                     } else if (userChoice == 2) {
+                        // TODO: Functionality to search and display flights by destination
                     } else if (userChoice == 3) {
-                        init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                        customer.viewFlights(init.getFlights());
                     } else if (userChoice == 4) {
                         customer = null;
                     }
@@ -350,7 +355,7 @@ public class Logic {
         boolean invalidUser = true;
         // Scanner object for user input
         Scanner scanText = new Scanner(System.in);
-
+        
         // Valid Customer check
         do {
             // User asked for user name and password for login
@@ -466,6 +471,7 @@ public class Logic {
         return key;
     }
 
+    // Serializes any Serializable objects passed as argument to a file Data.ser
     public static void serialize(Serializable data) {
         try {
             FileOutputStream fileOut

@@ -1,5 +1,5 @@
 /*
- * 
+ * Pseudo database class storing all User objects
  */
 package samair;
 

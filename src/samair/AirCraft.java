@@ -1,5 +1,5 @@
 /*
- *
+ * Tagging interface for AirCraft like classes
  */
 package samair;
 

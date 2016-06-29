@@ -1,5 +1,5 @@
 /*
- *
+ * Pilot class storing all the info about the Pilot object
  */
 package samair;
 
