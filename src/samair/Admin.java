@@ -48,9 +48,10 @@ public class Admin extends User {
         // Select destination AirPort
         AirPort destinationAirPort = selectDestinationAirPort(adb);
         // Calculate flight duration between origin and destination AirPorts
-        double flightDurationFloat = fdb.calculateFligthDurationInDecimal(fdb.calculateDistance(
+        double flightDurationFloat = fdb.calculateFlightDurationInDecimal(fdb.calculateDistance(
                 originAirPort.getLatitude(), originAirPort.getLongitude(),
                 destinationAirPort.getLatitude(), destinationAirPort.getLongitude(), "KM"));
+        int flightDurationInMilliseconds = (int)(flightDurationFloat * 60 * 60 * 1000);
         // Convert flight's duration from decimal to text represantation
         String flightDurationText = fdb.convertDecimalToHours(flightDurationFloat);
         // Create a Calendar aboject with current date
@@ -69,14 +70,21 @@ public class Admin extends User {
         // Set the hour of the flight's time
         int hour = selectHour(scanInt);
         calendarForFlight.set(Calendar.HOUR_OF_DAY, hour);
-        // Set the minute of the fligth's time
+        // Set the minute of the flight's time
         int minute = selectMinute(scanInt);
         calendarForFlight.set(Calendar.MINUTE, minute);
         // Set the AirPLane and Pilot for the flight
         AirCraft airplane = null;
         airplane = fdb.setAirCraft(airplane, acdb, pdb, (int) flightDurationFloat);
+        // Set daperture and arrivel times for the flight
+        Time departureTime = new Time(calendarForFlight.getTimeInMillis());
+        calendarForFlight.add(Calendar.HOUR_OF_DAY, flightDurationInMilliseconds);
+        Time arrivalTime = new Time(calendarForFlight.getTimeInMillis());        
         // Create and return the new flight object
         Flight flight = new Flight(airLines, originAirPort, destinationAirPort, airplane, flightDurationText, minute);
+        scheduleFlight(flight);
+        flight = scheduleFlight(flight);
+        System.out.println("CREATED FLIGHT: " + flight.getFlightNumber() + "\n" + flight);
         return  flight;
     }
 
@@ -269,10 +277,11 @@ public class Admin extends User {
                         + " - " + calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH));
                 try {
                     day = scanInt.nextInt();
-                    if (day < calendarForFlight.get(calendarForFlight.getActualMinimum(Calendar.DAY_OF_MONTH))) {
-                        System.out.println("Invalid input. Please try again!");
+                    if (day < 1) {
+                        System.out.println("Invalid input. Day can't be lower than 1. Please try again!");
                     } else if (day > calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-                        System.out.println("Invalid input. Please try again!");
+                        System.out.println("Invalid input. Day can't be higher than " 
+                                + calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH) +  ". Please try again!");
                     } else {
                         invalidDay = false;
                     }
@@ -341,38 +350,38 @@ public class Admin extends User {
 
     /**
      * Schedules a newly created flight 
-     * @param fligth is a newly created flight passed into the method
+     * @param flight is a newly created flight passed into the method
      * to be scheduled
      * @return a scheduled flight
      */
-    public Flight scheduleFlight(Flight fligth) {
+    public Flight scheduleFlight(Flight flight) {
         Date randomDate = generateRandomDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(randomDate);
         Time departureTime = new Time(cal.getTimeInMillis());
-        cal.add(Calendar.MILLISECOND, (int) fligth.getFlightDurationInMilliseconds());
+        cal.add(Calendar.MILLISECOND, (int) flight.getFlightDurationInMilliseconds());
         Time arrivalTime = new Time(cal.getTimeInMillis());
-        fligth.scheduleFlight(randomDate, departureTime, arrivalTime);
-        return generateFligthNumber(fligth);
+        flight.scheduleFlight(randomDate, departureTime, arrivalTime);
+        return generateFlightNumber(flight);
     }
 
     /**
      * Adds a created and scheduled flight to FlightDataBase
-     * @param fligth is the flight to be added to the database
+     * @param flight is the flight to be added to the database
      * @param fdb is the data base that the flight is added to
      */
-    public void addFlight(Flight fligth, FlightDataBase fdb) {
+    public void addFlight(Flight flight, FlightDataBase fdb) {
         boolean duplicatedKey = true;
         do {
             fdb.getScheduledFlights().forEach((k, v) -> {
-                if (((Flight) v).getFlightNumber().equalsIgnoreCase(fligth.getFlightNumber())) {
+                if (((Flight) v).getFlightNumber().equalsIgnoreCase(flight.getFlightNumber())) {
                     System.out.println("DUPLICATED KEY!!!" + "\n" + v + "DUPLICATED KEY!!!");
-                    generateFligthNumber(fligth);
+                    generateFlightNumber(flight);
                 }
             });
             duplicatedKey = false;
         } while (duplicatedKey);
-        fdb.getScheduledFlights().put(fligth.getFlightNumber(), fligth);
+        fdb.getScheduledFlights().put(flight.getFlightNumber(), flight);
     }
 
     /**
@@ -432,21 +441,21 @@ public class Admin extends User {
 
     /**
      * Generates a unique flight number based of the info about the flight itself
-     * @param fligth is used to retrieve the info about that flight and to generate
+     * @param flight is used to retrieve the info about that flight and to generate
      * the flight number for it
      * @return a Flight object with generated flight number
      */
-    private Flight generateFligthNumber(Flight fligth) {
+    private Flight generateFlightNumber(Flight flight) {
         Random randomGen = new Random(System.nanoTime());
-        String A = fligth.getAirLine().substring(0, 2).toUpperCase();
-        String B = fligth.getOrigin().getCity().substring(0, 3).replaceAll("\"", "").toUpperCase();
-        String C = fligth.getDestination().getCity().substring(0, 3).replaceAll("\"", "").toUpperCase();
+        String A = flight.getAirLine().substring(0, 2).toUpperCase();
+        String B = flight.getOrigin().getCity().substring(0, 3).replaceAll("\"", "").toUpperCase();
+        String C = flight.getDestination().getCity().substring(0, 3).replaceAll("\"", "").toUpperCase();
 
-        String fligthNo = A + (randomGen.nextInt(91) + 10) + B + (randomGen.nextInt(91) + 10) + C + randomGen.nextInt(10);
+        String flightNo = A + (randomGen.nextInt(91) + 10) + B + (randomGen.nextInt(91) + 10) + C + randomGen.nextInt(10);
 
-        fligth.setFlightNumber(fligthNo);
+        flight.setFlightNumber(flightNo);
 
-        return fligth;
+        return flight;
     }
 
     /**
@@ -646,7 +655,7 @@ public class Admin extends User {
         do {
             System.out.println("Please select city of destination from the list above:");
             city = scanText.nextLine();
-            if (city.length() > 2) {
+            if (city.length() > 3) {
                 for (String tempCity : cities) {
                     if (tempCity.equalsIgnoreCase(city)) {
                         city = tempCity;
@@ -655,7 +664,7 @@ public class Admin extends User {
                         break Label;
                     }
                 }
-            } else if (city.length() <= 2) {
+            } else if (city.length() <= 3) {
                 try {
                     city = cities.get(Integer.parseInt(city) - 1);
                     invalidCity = false;

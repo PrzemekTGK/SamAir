@@ -88,12 +88,14 @@ public class FlightDataBase implements Serializable {
                 origin.getLongitude(), destination.getLatitude(), destination.getLongitude(), "KM");
         
         // Calculate fligth duration in floating point numbers
-        flightDurationFloat = calculateFligthDurationInDecimal(distance);
+        flightDurationFloat = calculateFlightDurationInDecimal(distance);
         // Convert fligth duration from floating point numbers to 
         // text represantation of actual hours and minutes
         flightDurationText = convertDecimalToHours(flightDurationFloat);
         // Convert duration to miliseconds
-        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);        
+        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);
+        // Set the airplane for the flight
+        airplane = (AirPlane) setAirCraft(airplane, airCrafts, pilots, flightDurationFloat);
 
         // Create a flight wth all detailes aquired before
         flight = new Flight(airlines, origin, destination, airplane,
@@ -107,7 +109,8 @@ public class FlightDataBase implements Serializable {
      Less or equal to 12 hours and more than 12 hours.
      */
     protected AirCraft setAirCraft(AirCraft airplane, AirCraftDataBase airCrafts,
-            PilotDataBase pilots, int flightDurationFloat){
+            PilotDataBase pilots, double flightDurationFloat){
+        // Flight longer than 12h
         if (flightDurationFloat > 12) {
             // Select pilot with rating higher than 5 for fligths longer than 12h
             Pilot pilot = null;
@@ -129,6 +132,7 @@ public class FlightDataBase implements Serializable {
                     break;
                 }
             }
+        // Flight shoerter than 12h
         } else {
             // Select pilot with rating up to 5 for fligths up to 12h
             Pilot pilot = null;
@@ -171,7 +175,7 @@ public class FlightDataBase implements Serializable {
     }
 
     // Calculates duration of fligth in hours as floating point numbers
-    protected float calculateFligthDurationInDecimal(double distance) {
+    protected float calculateFlightDurationInDecimal(double distance) {
         // Distance is passed in as argument and divided by speed of airplane (~800km/h)
         float flightDuration = (float) distance / 800;
         return flightDuration;

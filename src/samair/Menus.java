@@ -123,7 +123,7 @@ public class Menus {
         Scanner scanText = new Scanner(System.in);
         int userChoice = 0;        
             System.out.print("Please select:"
-                    + "\n1. Create Fligth"
+                    + "\n1. Create Flight"
                     + "\n2. Update Flight"
                     + "\n3. Display All Flights"
                     + "\n4. Log Out"

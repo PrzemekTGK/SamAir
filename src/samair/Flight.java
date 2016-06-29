@@ -15,7 +15,7 @@ public class Flight implements Journey {
 
     private long flightDurationInMilliseconds;
     private String flightDuration;
-    private String airLine;
+    private String airLines;
     private AirPort origin;
     private AirPort destination;
     private Date dateOfFlight;
@@ -31,7 +31,7 @@ public class Flight implements Journey {
 
     public Flight(String airLine, AirPort origin, AirPort destination,
             AirCraft airCraftAssigned, String flightDuration, long flightInMillis) {
-        this.airLine = airLine;
+        this.airLines = airLine;
         this.origin = origin;
         this.destination = destination;
         this.airCraftAssigned = airCraftAssigned;
@@ -157,17 +157,17 @@ public class Flight implements Journey {
     }
 
     /**
-     * @return the airLine
+     * @return the airLines
      */
     public String getAirLine() {
-        return airLine;
+        return airLines;
     }
 
     /**
-     * @param airLine the airLine to set
+     * @param airLine the airLines to set
      */
     public void setAirLine(String airLine) {
-        this.airLine = airLine;
+        this.airLines = airLine;
     }
 
     /**
@@ -207,9 +207,9 @@ public class Flight implements Journey {
     
     @Override
     public String toString() {
-        return "========================================================="
+        return "=============================================="
                 + "\nFlight:"
-                + "\nAir Lines - " + airLine + "\n"
+                + "\nAir Lines - " + airLines + "\n"
                 + "\nOrigin " + origin
                 + "\nDestination " + destination
                 + "\nDate of Flight = " + dateParser.format(getDateOfFlight())

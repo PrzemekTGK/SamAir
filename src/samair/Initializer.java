@@ -26,83 +26,83 @@ public class Initializer implements Serializable {
     
     public UserDataBase initialize(Logic logic){
 
-        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), getAdmin());
-        getUsers().getUsers().put(logic.generateUniqueKey(getUsers().getUsers()), getCustomer());
+        getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getAdmin());
+        getUsersDataBase().getUsers().put(logic.generateUniqueKey(getUsersDataBase().getUsers()), getCustomer());
 
         // Initializing Hashmaps with randomly created pilots, airplanes
         try {
             // Creat 100 random pilots
             for (int i = 0; i < 100; i++) {
-                Pilot pilot = getPilots().generatePilot(getPilots().readTextFile(
+                Pilot pilot = getPilotsDataBase().generatePilot(getPilotsDataBase().readTextFile(
                         new File("names.txt")),
-                        getPilots().readTextFile(new File("surnames.txt")),
-                        getPilots().getPilots());
-                getPilots().getPilots().put(pilot.getPilotID(), pilot);
+                        getPilotsDataBase().readTextFile(new File("surnames.txt")),
+                        getPilotsDataBase().getPilots());
+                getPilotsDataBase().getPilots().put(pilot.getPilotID(), pilot);
             }
             // Create 50 random Beoing airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCrafts().getAirCrafts().put(logic.generateUniqueKey(getAirCrafts().getAirCrafts()), getAirCrafts().generateAirCraft(getAirCrafts().readAirplanesFromCsvFile(
+                getAirCraftsDataBase().getAirCrafts().put(logic.generateUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
                         new File("boeing.csv"))));
             }
             // Create 50 random Airbus airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCrafts().getAirCrafts().put(logic.generateUniqueKey(getAirCrafts().getAirCrafts()), getAirCrafts().generateAirCraft(getAirCrafts().readAirplanesFromCsvFile(
+                getAirCraftsDataBase().getAirCrafts().put(logic.generateUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
                         new File("airbus.csv"))));
             }
             
-            getAirPorts().generateAirportsFromCsvFile(new File("airports.csv"));
+            getAirPortsDataBase().generateAirportsFromCsvFile(new File("airports.csv"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SamAir.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Generate 100 random flights
         for (int i = 0; i < 100; i++) {
-            Flight fligth = getFlights().generateFlight(getAirPorts(), getAirCrafts(), getPilots());        
+            Flight fligth = this.getFlightsDataBase().generateFlight(getAirPortsDataBase(), getAirCraftsDataBase(), getPilotsDataBase());        
             ((Admin)getAdmin()).scheduleFlight(fligth);
-            ((Admin)getAdmin()).addFlight(fligth, getFlights());            
+            ((Admin)getAdmin()).addFlight(fligth, getFlightsDataBase());            
         }
                
         // Display all airplanes and pilots created
-//        getAirPorts().getAirPorts().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
-//        getAirCrafts().getAirCrafts().forEach((k, v) -> System.out.println(v + "\n"));
-//        getPilots().getPilots().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
-//        getFlights().getScheduledFlights().forEach((k,v) -> System.out.println(v));
+//        getAirPortsDataBase().getAirPortsDataBase().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
+//        getAirCraftsDataBase().getAirCraftsDataBase().forEach((k, v) -> System.out.println(v + "\n"));
+//        getPilotsDataBase().getPilotsDataBase().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
+//        getFlightsDataBase().getScheduledFlights().forEach((k,v) -> System.out.println(v));
         
-        return getUsers();
+        return getUsersDataBase();
     }
 
     /**
      * @return the users
      */
-    public UserDataBase getUsers() {
+    public UserDataBase getUsersDataBase() {
         return users;
     }
 
     /**
      * @return the pilots
      */
-    public PilotDataBase getPilots() {
+    public PilotDataBase getPilotsDataBase() {
         return pilots;
     }
 
     /**
      * @return the airPorts
      */
-    public AirPortDataBase getAirPorts() {
+    public AirPortDataBase getAirPortsDataBase() {
         return airPorts;
     }
 
     /**
      * @return the airCrafts
      */
-    public AirCraftDataBase getAirCrafts() {
+    public AirCraftDataBase getAirCraftsDataBase() {
         return airCrafts;
     }
 
     /**
      * @return the flight
      */
-    public FlightDataBase getFlights() {
+    public FlightDataBase getFlightsDataBase() {
         return flights;
     }
 

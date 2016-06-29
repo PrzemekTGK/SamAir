@@ -38,13 +38,13 @@ public class Logic {
             init = (Initializer) in.readObject();
             in.close();
             fileIn.close();
+            System.out.println("Data.ser was loaded");
         } catch (IOException i) {
             init = new Initializer();
             init.initialize(logic);
             serialize(init);
         } catch (ClassNotFoundException c) {
-            System.out.println("Employee class not found");
-            c.printStackTrace();
+            System.out.println("Initializer class not found");
         }
         return init;
     }
@@ -98,17 +98,17 @@ public class Logic {
                     admin = adminLogin(users.getUsers());
                     boolean invalidInput = true;
                     do {
-                        int userChoice = menus.displayAdminMenu(init.getFlights());
+                        int userChoice = menus.displayAdminMenu(init.getFlightsDataBase());
 
                         if (userChoice == 1) {
                             ((Admin) init.getAdmin()).addFlight(((Admin) 
-                                    init.getAdmin()).createFlight(init.getAirPorts(),
-                                            init.getFlights(), init.getAirCrafts(),
-                                            init.getPilots()), init.getFlights());;
+                                    init.getAdmin()).createFlight(init.getAirPortsDataBase(),
+                                            init.getFlightsDataBase(), init.getAirCraftsDataBase(),
+                                            init.getPilotsDataBase()), init.getFlightsDataBase());;
                         } else if (userChoice == 2) {
-                            ((Admin) init.getAdmin()).updateFlight(init.getFlights());
+                            ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
                         } else if (userChoice == 3) {
-                            admin.viewFlights(init.getFlights());
+                            admin.viewFlights(init.getFlightsDataBase());
                         } else if (userChoice == 4) {
                             admin = null;
                             invalidInput = false;
@@ -128,14 +128,14 @@ public class Logic {
                     // Customer chose to login
                 } else {
                     customer = customerLogin(users.getUsers());
-                    int userChoice = menus.displayCustomerMenu(init.getFlights());
+                    int userChoice = menus.displayCustomerMenu(init.getFlightsDataBase());
 
                     if (userChoice == 1) {
                         // TODO: Functionality to book a specific flight
                     } else if (userChoice == 2) {
                         // TODO: Functionality to search and display flights by destination
                     } else if (userChoice == 3) {
-                        customer.viewFlights(init.getFlights());
+                        customer.viewFlights(init.getFlightsDataBase());
                     } else if (userChoice == 4) {
                         customer = null;
                     }
