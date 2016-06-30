@@ -11,7 +11,6 @@ public class SamAir {
 
     /**
      * @param args the command line arguments
-     * 
      */
     public static void main(String[] args) {
         // Logic object created to call its startProgram method

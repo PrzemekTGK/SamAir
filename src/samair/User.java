@@ -13,7 +13,10 @@ public abstract class User implements Serializable{
 
     private String userName;
     private String password;
-    
+    /**
+     * Displays all flights from pseudo database of flights
+     * @param fdb is the date base of flights to be displayed
+     */
     void viewFlights(FlightDataBase fdb){
         fdb.getScheduledFlights().forEach((k,v) -> System.out.println(v));
     };

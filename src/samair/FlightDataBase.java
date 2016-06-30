@@ -25,7 +25,6 @@ public class FlightDataBase implements Serializable {
     public FlightDataBase( ) {
         // Initialized HashMap to new instance of this object
         this.scheduledFlights = new HashMap<String, Journey>();
-       
     }
 
     /**
