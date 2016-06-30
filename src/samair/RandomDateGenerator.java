@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * RandomDateGenerator class generates a random date between now and 1 year from now
  */
 package samair;
 

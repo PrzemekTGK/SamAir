@@ -30,7 +30,11 @@ public class Logic {
     // Initializer object declared 
     private Initializer init = null;
 
-    public Initializer init(Logic logic) {
+    /**
+     * Initializes Initializer object to file or new instance
+     * @return Initializer object initialized with a file or a new instance of an object
+     */
+    public Initializer init() {
         // Initializer object loaded in from the file or created and saved to the file
         try {
             FileInputStream fileIn = new FileInputStream("Data.ser");
@@ -38,21 +42,22 @@ public class Logic {
             init = (Initializer) in.readObject();
             in.close();
             fileIn.close();
+            System.out.println("Data.ser was loaded");
         } catch (IOException i) {
             init = new Initializer();
-            init.initialize(logic);
+            init.initialize(this);
             serialize(init);
         } catch (ClassNotFoundException c) {
-            System.out.println("Employee class not found");
-            c.printStackTrace();
+            System.out.println("Initializer class not found");
         }
         return init;
     }
-
-    /*
-     Starting point of the program. Allows for admin/customer 
-     registration and login. Admin needs to know the passweord
-     to be able to do either one.
+    
+    /**
+     * Starting point of the program. Allows for admin/customer 
+     * registration and login. Admin needs to know the passweord
+     * to be able to do either one.
+     * @param users is used to get access to pseudo data base of users
      */
     public void startProgram(UserDataBase users) {
         // Scanner object for user input
@@ -91,21 +96,24 @@ public class Logic {
                 // Admin chose to register
                 if (loginMenuChoice == 1) {
                     users.getUsers().put(
-                            generateUniqueKey(users.getUsers()),
+                            verifyUniqueKey(users.getUsers()),
                             registerAdmin(users.getUsers()));
-                    // Admin chose to login
+                // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
                     boolean invalidInput = true;
                     do {
-                        int userChoice = menus.displayAdminMenu(init.getFlights());
+                        int userChoice = menus.displayAdminMenu(init.getFlightsDataBase());
 
                         if (userChoice == 1) {
-                            ((Admin) init.getAdmin()).createFlight(init.getAirPorts(), init.getFlights(), init.getAirCrafts(), init.getPilots());
+                            ((Admin) init.getAdmin()).addFlight(((Admin) 
+                                    init.getAdmin()).createFlight(init.getAirPortsDataBase(),
+                                            init.getFlightsDataBase(), init.getAirCraftsDataBase(),
+                                            init.getPilotsDataBase()), init.getFlightsDataBase());;
                         } else if (userChoice == 2) {
-                            ((Admin) init.getAdmin()).updateFlight(init.getFlights());
+                            ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
                         } else if (userChoice == 3) {
-                            init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                            admin.viewFlights(init.getFlightsDataBase());
                         } else if (userChoice == 4) {
                             admin = null;
                             invalidInput = false;
@@ -119,18 +127,20 @@ public class Logic {
                 int loginMenuChoice = menus.displayLoginMenu("Customer");
                 // Customer chose to register
                 if (loginMenuChoice == 1) {
-                    users.getUsers().put(generateUniqueKey(
+                    users.getUsers().put(verifyUniqueKey(
                             users.getUsers()),
                             registerCustomer(users.getUsers()));
                     // Customer chose to login
                 } else {
                     customer = customerLogin(users.getUsers());
-                    int userChoice = menus.displayCustomerMenu(init.getFlights());
+                    int userChoice = menus.displayCustomerMenu(init.getFlightsDataBase());
 
                     if (userChoice == 1) {
+                        // TODO: Functionality to book a specific flight
                     } else if (userChoice == 2) {
+                        // TODO: Functionality to search and display flights by destination
                     } else if (userChoice == 3) {
-                        init.getFlights().getScheduledFlights().forEach((k, v) -> System.out.println(v));
+                        customer.viewFlights(init.getFlightsDataBase());
                     } else if (userChoice == 4) {
                         customer = null;
                     }
@@ -139,7 +149,12 @@ public class Logic {
         }
     }
 
-    // Admin registration
+    /**
+     * Method for admin registration
+     * @param userDataBase is used to verify that there is no admins with same
+     * user name as new admin  user to be registered
+     * @return new Admin object to be added to userDataBase
+     */
     public Admin registerAdmin(HashMap<String, User> userDataBase) {
 
         // Declared Admin object reference variable
@@ -206,7 +221,12 @@ public class Logic {
         return admin;
     }
 
-    // Customer registration
+    /**
+     * Method for customer registration
+     * @param userDataBase is used to verify that there is no customers with same
+     * user name as new customer  user to be registered
+     * @return new Customer object to be added to userDataBase
+     */
     public Customer registerCustomer(HashMap<String, User> userDataBase) {
 
         // Declared Customer object reference variable
@@ -274,7 +294,12 @@ public class Logic {
         return customer;
     }
 
-    // Admin login
+    /**
+     * Method for admin login
+     * @param userDataBase is used to verify that there is an admin with same
+     * user name and password as given by user
+     * @return a Admin object found in data base passed as argument
+     */
     public Admin adminLogin(HashMap<String, User> userDataBase) {
 
         // Declared Admin object reference variable    
@@ -340,8 +365,13 @@ public class Logic {
         // Returns succesfully logged in Admin user
         return admin;
     }
-
-    // Customer to login
+    
+    /**
+     * Method for customer login
+     * @param userDataBase is used to verify that there is a customer with same
+     * user name and password as given by user
+     * @return a Customer object found in data base passed as argument
+     */
     public Customer customerLogin(HashMap<String, User> userDataBase) {
 
         // Declared Customer object reference variable
@@ -350,7 +380,7 @@ public class Logic {
         boolean invalidUser = true;
         // Scanner object for user input
         Scanner scanText = new Scanner(System.in);
-
+        
         // Valid Customer check
         do {
             // User asked for user name and password for login
@@ -394,12 +424,16 @@ public class Logic {
         // Returns succesfully logged in Customer user
         return customer;
     }
-
-    // Generates and verifies a unique 
-    public String generateUniqueKey(HashMap userDataBase) {
+    
+    /**
+     * Method verifying a unique key for userDataBes
+     * @param userDataBase is used for verification of uniqueness of generated key
+     * @return String with a unique key for User object in userDataBase
+     */
+    public String verifyUniqueKey(HashMap userDataBase) {
 
         // String with key generated by random String method
-        String key = randomString();
+        String key = generateKey();
         // Key check condition
         boolean duplicatedKey = true;
 
@@ -427,7 +461,7 @@ public class Logic {
                     // Entry with duplicated key found
                     // New key is genereted and check is done again
                     if (key.equals(entry.getKey())) {
-                        key = randomString();
+                        key = generateKey();
                         continue Label;
                     }
 
@@ -448,8 +482,11 @@ public class Logic {
         }
     }
 
-    // Returns key as String of 6 random characters
-    public String randomString() {
+    /**
+     * Generates a random key and saves it as String
+     * @return String with generated key
+     */
+    public String generateKey() {
         // char declared for random char value
         char randomChar;
         // Empty String is declared for key generation
@@ -466,6 +503,10 @@ public class Logic {
         return key;
     }
 
+    /**
+     * Serializes any Serializable objects passed as argument to a file Data.ser
+     * @param data is used to define the object to be serialized
+     */
     public static void serialize(Serializable data) {
         try {
             FileOutputStream fileOut

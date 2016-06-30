@@ -1,5 +1,5 @@
 /*
- *
+ * Pseudo database class storing all AirCraft objects
  */
 package samair;
 
@@ -30,17 +30,21 @@ public class AirCraftDataBase implements Serializable{
     }
     
     
-    // Read csv files of specific format conatining details about airplanes
-    // File to be read from is passed as an argument of this method
+    /**
+     * Read csv files of specific format containing details about airplanes
+     * @param file is passed to define the csv file to read from
+     * @return 
+     * @throws FileNotFoundException 
+     */
     public ArrayList readAirplanesFromCsvFile(File file) throws FileNotFoundException {
 
-        // ArrayList of ArrayLists object to store ArrayList each containing
-        // details about individual model of an airplane
+        /* ArrayList of ArrayLists object to store ArrayList each containing
+         details about individual model of an airplane */
         ArrayList<ArrayList<String>> airplanesList = new ArrayList<ArrayList<String>>();
         // Csv ArrayList object to store read in cvs file 
         ArrayList<String> csvList = new ArrayList<String>();
-        // ArrayList object reference variable declared to
-        // store details about individual airplane
+        /* ArrayList object reference variable declared to
+         store details about individual airplane */
         ArrayList<String> airplaneAsList = null;
 
         // Scanner object to read in passed in csv file
@@ -62,17 +66,17 @@ public class AirCraftDataBase implements Serializable{
         // Initialize airplane's make String to first index of csv ArrayList
         airplaneMake = csvList.get(0);
 
-        // Loop thru csvList, break it down to individual airplane details
-        // Save those details in an ArrayList airPlaneList and save that list
-        // in an ArrayList of ArrayLists
+        /* Loop thru csvList, break it down to individual airplane details
+         Save those details in an ArrayList airPlaneList and save that list
+         in an ArrayList of ArrayLists */
         Label:
         for (int i = 0; i < csvList.size();) {
-            // New airPlaneList ArrayList object created to store details
-            // about individual airplane.
+            /* New airPlaneList ArrayList object created to store details
+            about individual airplane */
             airplaneAsList = new ArrayList<String>();
 
-            // Check first index of csvList and if it's equal to
-            // separation String airplaneMake set before            
+            /* Check first index of csvList and if it's equal to
+             separation String airplaneMake set before */
             if (i == 0 && csvList.get(i).equals(airplaneMake)) {
                 // Loops thru csvList from index 0 
                 for (int j = 0;; j++) {
@@ -90,8 +94,8 @@ public class AirCraftDataBase implements Serializable{
                         airplaneAsList.add(csvList.get(j));
                     }
                 }
-                // Check non first index of csvList and if it's equal to
-                // separation String airplaneMake set before
+                /* Check non first index of csvList and if it's equal to
+                 separation String airplaneMake set before */
             } else if (i != 0 && csvList.get(i).equals(airplaneMake)) {
                 // Loops thru csvList from index j set to outer loop's index i
                 for (int j = i;; j++) {
@@ -121,9 +125,17 @@ public class AirCraftDataBase implements Serializable{
         // ArrayList of ArrayLists containing airplane detail is returned
         return airplanesList;
     }
+    
+//    private ArrayList generateAirPlanesList(){
+//        
+//    }
 
-    // Generate a random airCraft object from ArrayList of ArrayLists 
-    // read in from the file containing details about airplanes
+    /**
+     * Generate a random airCraft object from ArrayList of ArrayLists 
+     * read in from the file containing details about airplanes
+     * @param airPlanes
+     * @return 
+     */
     public AirCraft generateAirCraft(ArrayList<ArrayList<String>> airPlanes) {
         // Randome number generetor object
         Random randomGen = new Random(System.nanoTime());

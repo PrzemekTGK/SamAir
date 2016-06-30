@@ -24,11 +24,13 @@ public class FlightDataBase implements Serializable {
     private HashMap<String, Journey> scheduledFlights;
     // ArrayList of airLines
     private ArrayList<String> airLines;
-
-    /* 
-     Constructor initializes the hashmap of flights to new instance of hashmap
-     object. Initializes the ArrayList of airLines to new instance of ArrayList object
-     and populates that list with list of airLines read in from a file passed as argument
+    
+    /**
+     * Constructor initializes the hashmap of flights to new instance of hashmap
+     * object. Initializes the ArrayList of airLines to new instance of ArrayList object
+     * and populates that list with list of airLines read in from a file passed as argument
+     * @param file is used to pass the file with list of airlines that are to be
+     * put into ArrayList
      */
     public FlightDataBase(File file) {
 
@@ -49,10 +51,14 @@ public class FlightDataBase implements Serializable {
         }
     }
 
-    /*
-     Generate a random flight. AirPortDataBase, AirCraftDataBase and PilotDataBase
-     objects are passed in to this method to get access to all available airports,
-     aircrafts and pilots need to generate the fligth.
+    /**
+     * Generate a random Flight
+     * @param airports
+     * @param airCrafts
+     * @param pilots
+     * All parameters are passed in to this method to get access to all
+     * available airports, aircrafts and pilots needed to generate the Flight
+     * @return New Flight object with random details
      */
     public Flight generateFlight(AirPortDataBase airports, AirCraftDataBase airCrafts,
             PilotDataBase pilots) {
@@ -85,15 +91,17 @@ public class FlightDataBase implements Serializable {
 
         // Calculate flight distance with calculate method that's using haversine formula
         double distance = calculateDistance(origin.getLatitude(),
-                origin.getLongitude(), destination.getLatitude(), destination.getLongitude(), "KM");
+                origin.getLongitude(), destination.getLatitude(), destination.getLongitude());
         
-        // Calculate fligth duration in floating point numbers
-        flightDurationFloat = calculateFligthDurationInDecimal(distance);
-        // Convert fligth duration from floating point numbers to 
+        // Calculate flight duration in floating point numbers
+        flightDurationFloat = calculateFlightDurationInDecimal(distance);
+        // Convert flight duration from floating point numbers to 
         // text represantation of actual hours and minutes
         flightDurationText = convertDecimalToHours(flightDurationFloat);
         // Convert duration to miliseconds
-        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);        
+        flightDurationMillis = (long) (flightDurationFloat * 60 * 60 * 1000);
+        // Set the airplane for the flight
+        airplane = (AirPlane) setAirCraft(airplane, airCrafts, pilots, flightDurationFloat);
 
         // Create a flight wth all detailes aquired before
         flight = new Flight(airlines, origin, destination, airplane,
@@ -101,13 +109,21 @@ public class FlightDataBase implements Serializable {
         return flight;
     }
     
-    /*
-     Select the pilot and an AirPlane for the fligth based on distance
-     between origin and destination. Fligths are split in 2 categories:
-     Less or equal to 12 hours and more than 12 hours.
+    /**
+     * Select the pilot and an AirPlane for the flight based on distance
+     * between origin and destination. Flights are split in 2 categories:
+     * Less or equal to 12 hours and more than 12 hours.
+     * @param flightDurationFloat is passed to determine type of AirPlane to create     * 
+     * @param airplane
+     * @param airCrafts
+     * @param pilots
+     * Remaining parameters are passed in to get access to all
+     * available airports,aircrafts and pilots needed to generate the AirPlane.
+     * @return new AirPlane object
      */
     protected AirCraft setAirCraft(AirCraft airplane, AirCraftDataBase airCrafts,
-            PilotDataBase pilots, int flightDurationFloat){
+            PilotDataBase pilots, double flightDurationFloat){
+        // Flight longer than 12h
         if (flightDurationFloat > 12) {
             // Select pilot with rating higher than 5 for fligths longer than 12h
             Pilot pilot = null;
@@ -129,6 +145,7 @@ public class FlightDataBase implements Serializable {
                     break;
                 }
             }
+        // Flight shoerter than 12h
         } else {
             // Select pilot with rating up to 5 for fligths up to 12h
             Pilot pilot = null;
@@ -154,7 +171,12 @@ public class FlightDataBase implements Serializable {
         return airplane;
     }
 
-    // Converts hours as floating point number to actual hours and minutes
+    /**
+     * Converts hours as floating point number String representation
+     * of actual hours and minutes
+     * @param decimalDuration is passed to be converted to String version of flight duration
+     * @return String representation of flight duration
+     */
     protected String convertDecimalToHours(double decimalDuration) {
         // Convert hours as floating point to minutes as a floating points 
         double minutesAndSeconds = decimalDuration * 60;
@@ -170,17 +192,28 @@ public class FlightDataBase implements Serializable {
         return fligthDuration;
     }
 
-    // Calculates duration of fligth in hours as floating point numbers
-    protected float calculateFligthDurationInDecimal(double distance) {
+    /**
+     * Calculates duration of flight in hours as floating point numbers
+     * @param distance in Km is passed to calculate flight's duration 
+     * @return flight's duration in hours as float;
+     */
+    protected float calculateFlightDurationInDecimal(double distance) {
         // Distance is passed in as argument and divided by speed of airplane (~800km/h)
         float flightDuration = (float) distance / 800;
         return flightDuration;
     }
 
-    // Using haversine formula to calculate the distance between airports
-    // Mathod aquired from MobiTechTutor.
+    /**
+     * Using Haversine formula to calculate the distance between airports
+     * Method acquired from MobiTechTutor.
+     * @param lat1 is the latitude of origin airport
+     * @param lon1 is the longitude of origin airport
+     * @param lat2 is the latitude of destination airport
+     * @param lon2 is the longitude of destination airport
+     * @return 
+     */
     protected double calculateDistance(double lat1, double lon1, double lat2,
-            double lon2, String unit) {
+            double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
                 + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
@@ -188,20 +221,24 @@ public class FlightDataBase implements Serializable {
         dist = Math.acos(dist); // returns the arc cosine
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
-        if (unit.equalsIgnoreCase("KM")) {
-            dist = dist * 1.609344;
-        } else if (unit.equalsIgnoreCase("NT")) {
-            dist = dist * 0.8684;
-        }
+        dist = dist * 1.609344;
         return (dist);
     }
 
-    // Convert degrees to radians
+    /**
+     * Convert degrees to radians
+     * @param deg degrees to be converted
+     * @return degrees converted to radians
+     */
     private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    // Convert radians to degrees
+    /**
+     * Convert radians to degrees
+     * @param rad radians to be converted 
+     * @return radians converted to degrees
+     */
     private double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }

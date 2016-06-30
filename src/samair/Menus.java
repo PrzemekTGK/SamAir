@@ -1,3 +1,6 @@
+/*
+ * Manues class holds methods displaying different menus of the program
+ */
 package samair;
 
 import java.util.Scanner;
@@ -86,8 +89,8 @@ public class Menus {
 
         do {
             System.out.print("Please select:"
-                    + "\n1. Book a Flight"
-                    + "\n2. Search Flights by destination"
+                    + "\n1. Book a specific Flight"
+                    + "\n2. Display Flights by destination"
                     + "\n3. Display All Flights"
                     + "\n4. Log Out"
                     + "\n: ");
@@ -120,7 +123,7 @@ public class Menus {
         Scanner scanText = new Scanner(System.in);
         int userChoice = 0;        
             System.out.print("Please select:"
-                    + "\n1. Create Fligth"
+                    + "\n1. Create Flight"
                     + "\n2. Update Flight"
                     + "\n3. Display All Flights"
                     + "\n4. Log Out"

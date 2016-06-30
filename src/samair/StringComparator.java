@@ -1,3 +1,6 @@
+/*
+ * StringComparator class used to sort ArrayLists of Strings
+ */
 package samair;
 
 import java.util.Comparator;
