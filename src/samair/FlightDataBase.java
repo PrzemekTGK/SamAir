@@ -31,7 +31,8 @@ public class FlightDataBase implements Serializable {
      * Generate a random Flight
      * @param airports airport data base
      * @param airCrafts aircrafts  data base
-     * @param pilots pilots  data base
+     * @param pilots pilots data base
+     * @param airlines airlines data base
      * All parameters are passed in to this method to get access to all
      * available airports, aircrafts and pilots needed to generate the Flight
      * @return New Flight object with random details

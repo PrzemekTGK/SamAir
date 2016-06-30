@@ -28,7 +28,7 @@ public class PilotDataBase implements Serializable {
      * Reads a text file with name, one name in each line
      * @param file is the file to be read from
      * @return ArrayList populated with names from the file
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException if defined file is not found
      */
     public ArrayList readTextFile(File file) throws FileNotFoundException {
         // ArrayList object to store names read in from the file

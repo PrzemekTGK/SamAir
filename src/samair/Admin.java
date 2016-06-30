@@ -35,6 +35,7 @@ public class Admin extends User {
      * @param fdb flight data base
      * @param acdb aircraft data base
      * @param pdb pilot data base
+     * @param aldb airlines data base
      * All parameters are used to get access to certain databases
      * @return newly created Flight object
      */
