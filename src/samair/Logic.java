@@ -108,8 +108,11 @@ public class Logic {
                         if (userChoice == 1) {
                             ((Admin) init.getAdmin()).addFlight(((Admin) 
                                     init.getAdmin()).createFlight(init.getAirPortsDataBase(),
-                                            init.getFlightsDataBase(), init.getAirCraftsDataBase(),
-                                            init.getPilotsDataBase()), init.getFlightsDataBase());;
+                                            init.getFlightsDataBase(),
+                                            init.getAirCraftsDataBase(),
+                                            init.getPilotsDataBase(),
+                                            init.getAirlinesDataBase()),
+                                    init.getFlightsDataBase());
                         } else if (userChoice == 2) {
                             ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
                         } else if (userChoice == 3) {

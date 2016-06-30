@@ -38,12 +38,12 @@ public class Admin extends User {
      * All parameters are used to get access to certain databases
      */
     public Flight createFlight(AirPortDataBase adb, FlightDataBase fdb, AirCraftDataBase acdb,
-            PilotDataBase pdb) {
+            PilotDataBase pdb, AirLinesDataBase aldb) {
         // Declare and instantiate scanner objects for user's input
         Scanner scanText = new Scanner(System.in);
         Scanner scanInt = new Scanner(System.in);
         // Select the Airlines
-        String airLines = selectAirLines(fdb, scanInt);
+        String airLines = selectAirLines(aldb, scanInt);
         // Select origin AirPort
         AirPort originAirPort = selectOriginAirport(adb);
         // Select destination AirPort
@@ -92,14 +92,14 @@ public class Admin extends User {
     /**
      * Displays a list of all possible airlines and asks admin user to select one
      * of those airlines for the flight to be created. 
-     * @param fdb FlightDataBase is used to access list of all airlines
+     * @param aldb AirLinesDataBase is used to access list of all airlines
      * @param scanInt is used for user's input.
      * @return 
      */    
-    private String selectAirLines(FlightDataBase fdb, Scanner scanInt) {
+    private String selectAirLines(AirLinesDataBase aldb, Scanner scanInt) {
         String airLines = null;
         boolean invalidAirLines = true;
-        fdb.getAirlines().forEach(airlines -> System.out.println((fdb.getAirlines().indexOf(airlines) + 1) + ". " + airlines));
+        aldb.getAirlines().forEach(airlines -> System.out.println((aldb.getAirlines().indexOf(airlines) + 1) + ". " + airlines));
         do {
             int index = 0;
             System.out.println("Please select the airlins for the flight!");
@@ -107,11 +107,11 @@ public class Admin extends User {
                 index = scanInt.nextInt() - 1;
                 if (index < 0) {
                     System.out.println("Invalid input. Input can't be cmaller than 0!");
-                } else if (index >= fdb.getAirlines().size()) {
+                } else if (index >= aldb.getAirlines().size()) {
                     System.out.println("Invalid input. Input can't be higher than "
-                            + fdb.getAirlines().size() + "!");
+                            + aldb.getAirlines().size() + "!");
                 } else {
-                    airLines = fdb.getAirlines().get(index);
+                    airLines = aldb.getAirlines().get(index);
                     System.out.println(airLines);
                     invalidAirLines = false;
                 }

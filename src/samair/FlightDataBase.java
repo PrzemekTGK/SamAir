@@ -3,16 +3,10 @@
  */
 package samair;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,33 +16,16 @@ public class FlightDataBase implements Serializable {
 
     // HashMap of upcoming flights
     private HashMap<String, Journey> scheduledFlights;
-    // ArrayList of airLines
-    private ArrayList<String> airLines;
+
     
     /**
-     * Constructor initializes the hashmap of flights to new instance of hashmap
-     * object. Initializes the ArrayList of airLines to new instance of ArrayList object
-     * and populates that list with list of airLines read in from a file passed as argument
-     * @param file is used to pass the file with list of airlines that are to be
-     * put into ArrayList
+     * Constructor initializes the hashmap of flights to a instance
+     * of hashmap object.
      */
-    public FlightDataBase(File file) {
-
-        // Initialized HashMap and ArrayList to new instances of those objects
+    public FlightDataBase( ) {
+        // Initialized HashMap to new instance of this object
         this.scheduledFlights = new HashMap<String, Journey>();
-        this.airLines = new ArrayList<String>();
-        // Declared Scanner object refernce vatiable
-        Scanner scanFile = null;
-        try {
-            // Read in the file
-            scanFile = new Scanner(file);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FlightDataBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // Populate the list from with the content of the file
-        while (scanFile.hasNextLine()) {
-            this.airLines.add(scanFile.nextLine());
-        }
+       
     }
 
     /**
@@ -61,11 +38,11 @@ public class FlightDataBase implements Serializable {
      * @return New Flight object with random details
      */
     public Flight generateFlight(AirPortDataBase airports, AirCraftDataBase airCrafts,
-            PilotDataBase pilots) {
+            PilotDataBase pilots, AirLinesDataBase airlines) {
         // Random object created for random choice of specific elements
         Random randomGen = new Random(System.nanoTime());
         // Declared fields needed for Flight object creation
-        String airlines = this.getAirlines().get(randomGen.nextInt(this.getAirlines().size() - 1));
+        String airline = airlines.getAirlines().get(randomGen.nextInt(airlines.getAirlines().size() - 1));
         AirPort origin = null;
         AirPort destination = null;
         AirPlane airplane = null;
@@ -104,7 +81,7 @@ public class FlightDataBase implements Serializable {
         airplane = (AirPlane) setAirCraft(airplane, airCrafts, pilots, flightDurationFloat);
 
         // Create a flight wth all detailes aquired before
-        flight = new Flight(airlines, origin, destination, airplane,
+        flight = new Flight(airline, origin, destination, airplane,
                 flightDurationText, flightDurationMillis);
         return flight;
     }
@@ -249,11 +226,4 @@ public class FlightDataBase implements Serializable {
     public HashMap<String, Journey> getScheduledFlights() {
         return scheduledFlights;
     }
-
-    /**
-     * @return the airLines
-     */
-    public ArrayList<String> getAirlines() {
-        return airLines;
-    }   
 }

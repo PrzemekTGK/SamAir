@@ -23,15 +23,13 @@ public class PilotDataBase implements Serializable {
     public PilotDataBase() {
         this.pilots = new HashMap<String, Pilot>();
     }
-
-    /**
-     * @return the pilots
-     */
-    public HashMap<String, Pilot> getPilots() {
-        return pilots;
-    }
     
-        // Read in a list of names and return it as an ArrayList
+    /**
+     * Reads a text file with name, one name in each line
+     * @param file is the file to be read from
+     * @return ArrayList populated with names from the file
+     * @throws FileNotFoundException 
+     */
     public ArrayList readTextFile(File file) throws FileNotFoundException {
         // ArrayList object to store names read in from the file
         ArrayList<String> fileAsList = new ArrayList<String>();
@@ -42,11 +40,16 @@ public class PilotDataBase implements Serializable {
         while (scanFile.hasNext()) {
             fileAsList.add(scanFile.next());
         }
-
         return fileAsList;
     }
 
-    // Generate a random pilot
+    /**
+     * Generate a random pilot with unique pilot's ID
+     * @param names is an ArrayList of names to create the pilot object
+     * @param surnames is an ArrayList of surnames to create the pilot object
+     * @param pilots is the pseudo database of pilots to verify unique pilot's ID
+     * @return new Pilot object
+     */
     public Pilot generatePilot(ArrayList<String> names, ArrayList<String> surnames,
             HashMap<String, Pilot> pilots) {
         // Random number generator with to randomly pick a name for the pilot
@@ -107,6 +110,14 @@ public class PilotDataBase implements Serializable {
                 }
             } while (duplicatedID);
         }
+        // Return a new Pilot object with rating and unique ID
         return pilot;
+    }
+    
+    /**
+     * @return the pilots
+     */
+    public HashMap<String, Pilot> getPilots() {
+        return pilots;
     }
 }

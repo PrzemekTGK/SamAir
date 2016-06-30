@@ -19,12 +19,18 @@ public class Initializer implements Serializable {
     private PilotDataBase pilots = new PilotDataBase();
     private AirPortDataBase airPorts = new AirPortDataBase();
     private AirCraftDataBase airCrafts = new AirCraftDataBase();
-    private FlightDataBase flights = new FlightDataBase(new File("airlines.txt"));
+    private FlightDataBase flights = new FlightDataBase();
+    private AirLinesDataBase airlines = new AirLinesDataBase(new File("airlines.txt"));
     // Dummy users data
     private User admin = new Admin("admin", "123");
     private User customer = new Customer("Sam", "123");
     
-    public UserDataBase initialize(Logic logic){
+    /**
+     * Initializes all pseudo data base with randomly created 
+     * @param logic
+     * @return 
+     */
+    public void initialize(Logic logic){
         getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getAdmin());
         getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getCustomer());
 
@@ -40,15 +46,23 @@ public class Initializer implements Serializable {
             }
             // Create 50 random Beoing airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
-                        new File("boeing.csv"))));
+                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(
+                        getAirCraftsDataBase().getAirCrafts()), 
+                        getAirCraftsDataBase().generateAirCraft(
+                                getAirCraftsDataBase().generateAirPlanesAsList(
+                                        getAirCraftsDataBase().readAirplanesFromCsvFile(
+                                                new File("boeing.csv")))));
             }
             // Create 50 random Airbus airplanes
             for (int i = 0; i < 50; i++) {
-                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(getAirCraftsDataBase().getAirCrafts()), getAirCraftsDataBase().generateAirCraft(getAirCraftsDataBase().readAirplanesFromCsvFile(
-                        new File("airbus.csv"))));
+                getAirCraftsDataBase().getAirCrafts().put(logic.verifyUniqueKey(
+                        getAirCraftsDataBase().getAirCrafts()), 
+                        getAirCraftsDataBase().generateAirCraft(
+                                getAirCraftsDataBase().generateAirPlanesAsList(
+                                        getAirCraftsDataBase().readAirplanesFromCsvFile(
+                                                new File("airbus.csv")))));
             }
-            
+            // Generate list of all airports in the file
             getAirPortsDataBase().generateAirportsFromCsvFile(new File("airports.csv"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SamAir.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,18 +70,12 @@ public class Initializer implements Serializable {
 
         // Generate 100 random flights
         for (int i = 0; i < 100; i++) {
-            Flight fligth = this.getFlightsDataBase().generateFlight(getAirPortsDataBase(), getAirCraftsDataBase(), getPilotsDataBase());        
+            Flight fligth = this.getFlightsDataBase().generateFlight(
+                    getAirPortsDataBase(), getAirCraftsDataBase(), 
+                    getPilotsDataBase(), getAirlinesDataBase());        
             ((Admin)getAdmin()).scheduleFlight(fligth);
             ((Admin)getAdmin()).addFlight(fligth, getFlightsDataBase());            
         }
-               
-        // Display all airplanes and pilots created
-//        getAirPortsDataBase().getAirPortsDataBase().forEach((k, v) -> System.out.println("Key: " + k + "\n" + v));
-//        getAirCraftsDataBase().getAirCraftsDataBase().forEach((k, v) -> System.out.println(v + "\n"));
-//        getPilotsDataBase().getPilotsDataBase().forEach((k, v) -> System.out.println("Key: " + k + "\nValue: " + v));
-//        getFlightsDataBase().getScheduledFlights().forEach((k,v) -> System.out.println(v));
-        
-        return getUsersDataBase();
     }
 
     /**
@@ -106,6 +114,13 @@ public class Initializer implements Serializable {
     }
 
     /**
+     * @return the airlines
+     */
+    public AirLinesDataBase getAirlinesDataBase() {
+        return airlines;
+    }   
+
+    /**
      * @return the admin
      */
     public User getAdmin() {
@@ -117,5 +132,5 @@ public class Initializer implements Serializable {
      */
     public User getCustomer() {
         return customer;
-    }    
+    }  
 }
