@@ -5,6 +5,7 @@ package samair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Przemek Stepien
  */
-public class AirLinesDataBase {
+public class AirLinesDataBase implements Serializable{
 
     // ArrayList of airLines
     private ArrayList<String> airLines = new ArrayList<String>();
