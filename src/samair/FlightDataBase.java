@@ -210,7 +210,7 @@ public class FlightDataBase implements Serializable {
      * @param lon1 is the longitude of origin airport
      * @param lat2 is the latitude of destination airport
      * @param lon2 is the longitude of destination airport
-     * @return 
+     * @return distance in Km as double
      */
     protected double calculateDistance(double lat1, double lon1, double lat2,
             double lon2) {
