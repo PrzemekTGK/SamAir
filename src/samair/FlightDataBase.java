@@ -29,9 +29,9 @@ public class FlightDataBase implements Serializable {
 
     /**
      * Generate a random Flight
-     * @param airports
-     * @param airCrafts
-     * @param pilots
+     * @param airports airport data base
+     * @param airCrafts aircrafts  data base
+     * @param pilots pilots  data base
      * All parameters are passed in to this method to get access to all
      * available airports, aircrafts and pilots needed to generate the Flight
      * @return New Flight object with random details
@@ -90,9 +90,9 @@ public class FlightDataBase implements Serializable {
      * between origin and destination. Flights are split in 2 categories:
      * Less or equal to 12 hours and more than 12 hours.
      * @param flightDurationFloat is passed to determine type of AirPlane to create     * 
-     * @param airplane
-     * @param airCrafts
-     * @param pilots
+     * @param airplane airplane to be setup
+     * @param airCrafts aircraft data base
+     * @param pilots pilot data base 
      * Remaining parameters are passed in to get access to all
      * available airports,aircrafts and pilots needed to generate the AirPlane.
      * @return new AirPlane object

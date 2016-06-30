@@ -27,8 +27,7 @@ public class Initializer implements Serializable {
     
     /**
      * Initializes all pseudo data base with randomly created 
-     * @param logic
-     * @return 
+     * @param logic is used to get access to some of methods needed 
      */
     public void initialize(Logic logic){
         getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getAdmin());

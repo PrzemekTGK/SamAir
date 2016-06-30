@@ -31,11 +31,12 @@ public class Admin extends User {
     /**
      * Asks admin user for all the details about the flight to be created
      * and creates and returns a new flight based on those details
-     * @param adb
-     * @param fdb
-     * @param acdb
-     * @param pdb 
+     * @param adb airport data base
+     * @param fdb flight data base
+     * @param acdb aircraft data base
+     * @param pdb pilot data base
      * All parameters are used to get access to certain databases
+     * @return newly created Flight object
      */
     public Flight createFlight(AirPortDataBase adb, FlightDataBase fdb, AirCraftDataBase acdb,
             PilotDataBase pdb, AirLinesDataBase aldb) {

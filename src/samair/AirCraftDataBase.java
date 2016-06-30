@@ -34,7 +34,7 @@ public class AirCraftDataBase implements Serializable {
      * Read csv files of specific format containing details about airplanes
      * @param file is passed to define the csv file to read from
      * @return ArrayList populated with elements from the csv file
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException if file is not found
      */
     public ArrayList readAirplanesFromCsvFile(File file) throws FileNotFoundException {
         // Csv ArrayList object to store read in cvs file 
@@ -130,10 +130,10 @@ public class AirCraftDataBase implements Serializable {
     }
 
     /**
-     * Generate a random airCraft object from ArrayList of ArrayLists read in
+     * Generate a random airCraft object 
+     * @param airPlanes ArrayList of ArrayLists read in
      * from the file containing details about airplanes
-     * @param airPlanes
-     * @return new AirCraft object
+     * @return newly created AirCraft object
      */
     public AirCraft generateAirCraft(ArrayList<ArrayList<String>> airPlanes) {
         // Randome number generetor object

@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
- *
  * @author Przemek Stepien
  */
 public class RandomDateGenerator {
@@ -19,12 +18,18 @@ public class RandomDateGenerator {
 
     /**
      * Creates a new instance of RandomDateGenerator
+     * @param min defines minimum date for random date generation
+     * @param max defines maximum date for random date generation
      */
     public RandomDateGenerator(Date min, Date max) {
         dateMin = min;
         dateMax = max;
     }
 
+    /**
+     * Generates a random date
+     * @return returns random date object
+     */
     public Date generate() {
         // Calculate miliseconds per dey
         final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;

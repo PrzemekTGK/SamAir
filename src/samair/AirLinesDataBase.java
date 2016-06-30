@@ -22,7 +22,7 @@ public class AirLinesDataBase implements Serializable{
     
     /**
      * Constructor populates airLines ArrayList with text file passed in as argument
-     * @param file 
+     * @param file text file of airlines
      */
     public AirLinesDataBase(File file) {
         // Declared Scanner object refernce vatiable 
