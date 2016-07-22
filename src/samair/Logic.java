@@ -26,22 +26,21 @@ public class Logic {
     // Declared Admin object reference variable
     private User admin = null;
     // Menus object for acces to various menus
-    private Menus menus = new Menus();
+    private final Menus MENUS = new Menus();
     // Initializer object declared 
     private Initializer init = null;
 
     /**
      * Initializes Initializer object to file or new instance
-     * @return Initializer object initialized with a file or a new instance of an object
+     *
+     * @return Initializer object initialized with a file or a new instance of
+     * an object
      */
     public Initializer init() {
         // Initializer object loaded in from the file or created and saved to the file
-        try {
-            FileInputStream fileIn = new FileInputStream("Data.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+        try (FileInputStream fileIn = new FileInputStream("Data.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);){            
             init = (Initializer) in.readObject();
-            in.close();
-            fileIn.close();
             System.out.println("Data.ser was loaded");
         } catch (IOException i) {
             init = new Initializer();
@@ -52,23 +51,24 @@ public class Logic {
         }
         return init;
     }
-    
+
     /**
-     * Starting point of the program. Allows for admin/customer 
-     * registration and login. Admin needs to know the passweord
-     * to be able to do either one.
+     * Starting point of the program. Allows for admin/customer registration and
+     * login. Admin needs to know the passweord to be able to do either one.
+     *
      * @param users is used to get access to pseudo data base of users
      */
     public void startProgram(UserDataBase users) {
-        // Scanner object for user input
+        // Scanner object for User input
         Scanner scanText = new Scanner(System.in);
+
         // Main program loop condition
         boolean userContinue = true;
         // Main program loop
         Label:
         while (userContinue) {
             // Displays main menu and asks user for input saved in an int.
-            int mainMenuChoice = menus.displayMainMenu();
+            int mainMenuChoice = MENUS.displayMainMenu();
             // User chose an option for admin
             if (mainMenuChoice == 1) {
                 // Admin's password check condition
@@ -92,42 +92,51 @@ public class Logic {
                 } while (invalidAdminPassword);
                 // Admin's password accepeted and admin can register/login
                 // Admin is asked to choose an option that's saved in an int
-                int loginMenuChoice = menus.displayLoginMenu("Admin");
+                int loginMenuChoice = MENUS.displayLoginMenu("Admin");
                 // Admin chose to register
                 if (loginMenuChoice == 1) {
                     users.getUsers().put(
                             verifyUniqueKey(users.getUsers()),
                             registerAdmin(users.getUsers()));
-                // Admin chose to login
+                    // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
-                    boolean invalidInput = true;
+                    boolean adminContinue = true;
                     do {
-                        int userChoice = menus.displayAdminMenu(init.getFlightsDataBase());
-
-                        if (userChoice == 1) {
-                            ((Admin) init.getAdmin()).addFlight(((Admin) 
-                                    init.getAdmin()).createFlight(init.getAirPortsDataBase(),
-                                            init.getFlightsDataBase(),
-                                            init.getAirCraftsDataBase(),
-                                            init.getPilotsDataBase(),
-                                            init.getAirlinesDataBase()),
-                                    init.getFlightsDataBase());
-                        } else if (userChoice == 2) {
-                            ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
-                        } else if (userChoice == 3) {
-                            admin.viewFlights(init.getFlightsDataBase());
-                        } else if (userChoice == 4) {
-                            admin = null;
-                            invalidInput = false;
+                        int userChoice = MENUS.displayAdminMenu(init.getFlightsDataBase());
+                        switch (userChoice) {
+                            case 1:
+                                ((Admin) init.getAdmin()).
+                                        addFlight(((Admin) init.getAdmin()).
+                                                createFlight(init.getAirPortsDataBase(),
+                                                        init.getFlightsDataBase(),
+                                                        init.getAirCraftsDataBase(),
+                                                        init.getPilotsDataBase(),
+                                                        init.getAirlinesDataBase()),
+                                                init.getFlightsDataBase());
+                                break;
+                            case 2:
+                                ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
+                                break;
+                            case 3:
+                                // TODO: Functionality to remove a flight
+                                break;
+                            case 4:
+                                admin.viewFlights(init.getFlightsDataBase());
+                                break;
+                            case 5:
+                                admin = null;
+                                adminContinue = false;
+                                break;
                         }
-                    } while (invalidInput);
+                    } while (adminContinue);
+
                 }
-            // User chose an option for customer
+                // User chose an option for customer
             } else {
                 // Displays register/login menu for customer to choose.
                 // Customer's choice is saved in an int.
-                int loginMenuChoice = menus.displayLoginMenu("Customer");
+                int loginMenuChoice = MENUS.displayLoginMenu("Customer");
                 // Customer chose to register
                 if (loginMenuChoice == 1) {
                     users.getUsers().put(verifyUniqueKey(
@@ -136,17 +145,25 @@ public class Logic {
                     // Customer chose to login
                 } else {
                     customer = customerLogin(users.getUsers());
-                    int userChoice = menus.displayCustomerMenu(init.getFlightsDataBase());
-
-                    if (userChoice == 1) {
-                        // TODO: Functionality to book a specific flight
-                    } else if (userChoice == 2) {
-                        // TODO: Functionality to search and display flights by destination
-                    } else if (userChoice == 3) {
-                        customer.viewFlights(init.getFlightsDataBase());
-                    } else if (userChoice == 4) {
-                        customer = null;
-                    }
+                    boolean customerContinue = true;
+                    do {
+                        int userChoice = MENUS.displayCustomerMenu(init.getFlightsDataBase());
+                        switch (userChoice) {
+                            case 1:
+                                // TODO: Functionality to book a specific flight
+                                break;
+                            case 2:
+                                // TODO: Functionality to search and display flights by destination
+                                break;
+                            case 3:
+                                customer.viewFlights(init.getFlightsDataBase());
+                                break;
+                            case 4:
+                                customer = null;
+                                customerContinue = false;
+                                break;
+                        }
+                    } while (customerContinue);
                 }
             }
         }
@@ -154,14 +171,15 @@ public class Logic {
 
     /**
      * Method for admin registration
+     *
      * @param userDataBase is used to verify that there is no admins with same
-     * user name as new admin  user to be registered
+     * user name as new admin user to be registered
      * @return new Admin object to be added to userDataBase
      */
     public Admin registerAdmin(HashMap<String, User> userDataBase) {
 
         // Declared Admin object reference variable
-        Admin admin = null;
+        Admin localAdmin = null;
         // Name check condition
         boolean duplicatedName = true;
         // Scanner object for user input
@@ -217,17 +235,18 @@ public class Logic {
         } while (duplicatedName);
 
         // New Admin object is created with user name and password given by the user
-        admin = new Admin(userName, password);
-        // Scanner object nullified for garbage collection
+        localAdmin = new Admin(userName, password);
+        // Scanner object nullified for garbage collection       
         scanText = null;
         // Admin object retruned
-        return admin;
+        return localAdmin;
     }
 
     /**
      * Method for customer registration
-     * @param userDataBase is used to verify that there is no customers with same
-     * user name as new customer  user to be registered
+     *
+     * @param userDataBase is used to verify that there is no customers with
+     * same user name as new customer user to be registered
      * @return new Customer object to be added to userDataBase
      */
     public Customer registerCustomer(HashMap<String, User> userDataBase) {
@@ -299,6 +318,7 @@ public class Logic {
 
     /**
      * Method for admin login
+     *
      * @param userDataBase is used to verify that there is an admin with same
      * user name and password as given by user
      * @return a Admin object found in data base passed as argument
@@ -306,7 +326,7 @@ public class Logic {
     public Admin adminLogin(HashMap<String, User> userDataBase) {
 
         // Declared Admin object reference variable    
-        Admin admin = null;
+        Admin localAdmin = null;
         // Valid admin check condition
         boolean invalidUser = true;
         // Scanner object declared for user input
@@ -322,55 +342,40 @@ public class Logic {
             System.out.println("Password:");
             String password = scanText.nextLine();
 
-            // Pseudo index for passed in hashmap to determine the end of that map
-            int index = 0;
-            // Iterator for passed in hashmap
-            Iterator adminIterator = userDataBase.entrySet().iterator();
-
             // Check passed in hashmap for Admin object with same
-            // user name and password as given by the user
-            while (adminIterator.hasNext()) {
-
-                // Single current entry of passed in hashmap
-                Map.Entry entry = (Map.Entry) adminIterator.next();
-
+            // user name and password as given by the user            
+            for (Map.Entry entry : userDataBase.entrySet()) {
                 // Check if entry is an Admin
-                if (entry.getValue() instanceof Admin) {
-
+                if (entry.getValue() instanceof Admin) {                    
                     // Checks if Admin entry's user name 
-                    // and password are same as given by the use
+                    // and password are same as given by the user
                     if (((Admin) entry.getValue()).getUserName().equals(userName)
                             && ((Admin) entry.getValue()).getPassword().equals(password)) {
-
                         // Admin user login accepted. Admin object reference
-                        // variable declared before is initialized to entry's
+                        // variable declared before it's initialized to entry's
                         // value casted as Admin
-                        admin = (Admin) entry.getValue();
-
+                        localAdmin = (Admin) entry.getValue();
                         // Check condition met and check is over
                         invalidUser = false;
                         break;
                     }
                 }
-
-                // Current entry's user name or password didn't match user name
-                // and password given by Admin user and pseudo index is incremented
-                index++;
-
-                // Pseudo index reached end of the map without finding matching
-                // admin to log in. Admin user is given an info message.
-                if (index == userDataBase.size()) {
-                    System.out.println("There is no users with given user name");
-                }
+            }
+            if (invalidUser) {
+                System.out.println("\nThere is no users with given user name."
+                        + "\nPlease try again.\n");
+            } else {
+                System.out.println("User: " + localAdmin + " found!");
             }
         } while (invalidUser);
-
+        scanText = null;
         // Returns succesfully logged in Admin user
-        return admin;
+        return localAdmin;
     }
-    
+
     /**
      * Method for customer login
+     *
      * @param userDataBase is used to verify that there is a customer with same
      * user name and password as given by user
      * @return a Customer object found in data base passed as argument
@@ -378,12 +383,12 @@ public class Logic {
     public Customer customerLogin(HashMap<String, User> userDataBase) {
 
         // Declared Customer object reference variable
-        Customer customer = null;
+        Customer localCustomer = null;
         // Valid customer check condition
         boolean invalidUser = true;
         // Scanner object for user input
         Scanner scanText = new Scanner(System.in);
-        
+
         // Valid Customer check
         do {
             // User asked for user name and password for login
@@ -391,46 +396,44 @@ public class Logic {
             String userName = scanText.nextLine();
             System.out.println("Password:");
             String password = scanText.nextLine();
-
-            // Pseudo index for passed in hashmap to determine the end of that map 
-            int index = 0;
-            // Iterator for passed in hashmap
-            Iterator adminIterator = userDataBase.entrySet().iterator();
-
+            
             // Check passed in hashmap for Customer object with same
             // user name and password as given by the user
-            while (adminIterator.hasNext()) {
-
-                // Single current entry of passed in hashmap
-                Map.Entry entry = (Map.Entry) adminIterator.next();
+            for (Map.Entry entry : userDataBase.entrySet()) {
+                // Check if entry is an Customer
                 if (entry.getValue() instanceof Customer) {
+                    // Checks if Admin entry's user name 
+                    // and password are same as given by the user
                     if (((Customer) entry.getValue()).getUserName().equals(userName)
                             && ((Customer) entry.getValue()).getPassword().equals(password)) {
-                        admin = (Customer) entry.getValue();
+                        // Customer user login accepted. Customer object reference
+                        // variable declared before it's initialized to entry's
+                        // value casted as Customer
+                        localCustomer = (Customer) entry.getValue();                        
+                        // Check condition met and check is over
                         invalidUser = false;
                         break;
                     }
                 }
-
-                // Current entry's user name or password didn't match user name
-                // and password given by Customer user and pseudo index is incremented
-                index++;
-
-                // Pseudo index reached end of the map without finding matching
-                // admin to log in. Customer user is given an info message.
-                if (index == userDataBase.size()) {
-                    System.out.println("There is no users with given user name");
-                }
             }
+            if (invalidUser) {
+                System.out.println("\nThere is no users with given user name."
+                        + "\nPlease try again.\n");
+            } else {
+                System.out.println("User: " + localCustomer + " found!");
+            }
+                
         } while (invalidUser);
-
+        scanText = null;
         // Returns succesfully logged in Customer user
-        return customer;
+        return localCustomer;
     }
-    
+
     /**
-     * Method verifying a unique key for userDataBes
-     * @param userDataBase is used for verification of uniqueness of generated key
+     * Method verifying a unique key for userDataBase
+     *
+     * @param userDataBase is used for verification of uniqueness of generated
+     * key
      * @return String with a unique key for User object in userDataBase
      */
     public String verifyUniqueKey(HashMap userDataBase) {
@@ -487,6 +490,7 @@ public class Logic {
 
     /**
      * Generates a random key and saves it as String
+     *
      * @return String with generated key
      */
     public String generateKey() {
@@ -508,19 +512,18 @@ public class Logic {
 
     /**
      * Serializes any Serializable objects passed as argument to a file Data.ser
+     *
      * @param data is used to define the object to be serialized
      */
     public static void serialize(Serializable data) {
-        try {
-            FileOutputStream fileOut
-                    = new FileOutputStream("Data.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        try (FileOutputStream fileOut = new FileOutputStream("Data.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);) {
             out.writeObject(data);
-            out.close();
-            fileOut.close();
+            out.flush();
+            fileOut.flush();
             System.out.println("Data saved in Data.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 }
