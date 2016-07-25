@@ -20,11 +20,12 @@ public class Initializer implements Serializable {
     private AirPortDataBase airPorts = new AirPortDataBase();
     private AirCraftDataBase airCrafts = new AirCraftDataBase();
     private FlightDataBase flights = new FlightDataBase();
+    private BookedFlightsDataBase bookedFlights= new BookedFlightsDataBase();
     private AirLinesDataBase airlines = new AirLinesDataBase(new File("airlines.txt"));
     // Dummy users data
     private User admin = new Admin("admin", "123");
     private User customer = new Customer("Sam", "123");
-    
+
     /**
      * Initializes all pseudo data base with randomly created 
      * @param logic is used to get access to some of methods needed 
@@ -77,6 +78,13 @@ public class Initializer implements Serializable {
         }
     }
 
+    /**
+     * @return the bookedFlights
+     */
+    public BookedFlightsDataBase getBookedFlights() {
+        return bookedFlights;
+    }
+    
     /**
      * @return the users
      */

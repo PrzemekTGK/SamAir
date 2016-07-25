@@ -25,20 +25,23 @@ public class Menus {
         System.out.print("Please select:"
                 + "\n1. Admin"
                 + "\n2. Customer"
+                + "\n3. Exit"
                 + "\n: ");
         do {
 
             switch (scanText.nextLine()) {
                 case "1":
-                    System.out.println("Admin Login");
                     userChoice = 1;
                     invalidInput = false;
                     break;
                 case "2":
-                    System.out.println("Customer Login");
                     userChoice = 2;
                     invalidInput = false;
                     break;
+                case "3":
+                    userChoice = 3;
+                    invalidInput = false;
+                    break;                    
                 default:
                     System.out.println("Invalid Input");
                     System.out.print(": ");
@@ -63,12 +66,10 @@ public class Menus {
 
             switch (scanText.nextLine()) {
                 case "1":
-                    System.out.println(user + " Register");
                     userChoice = 1;
                     invalidInput = false;
                     break;
                 case "2":
-                    System.out.println(user + " Login");
                     userChoice = 2;
                     invalidInput = false;
                     break;
@@ -87,23 +88,24 @@ public class Menus {
         boolean invalidChoice = true;
         int userChoice = 0;
         System.out.print("Please select:"
-                + "\n1. Book a specific Flight"
+                + "\n1. Display All Flights"
                 + "\n2. Display Flights by destination"
-                + "\n3. Display All Flights"
-                + "\n4. Log Out"
+                + "\n3. Book a Flight"
+                + "\n4. Display Booked Flights"
+                + "\n5. Log Out"
                 + "\n: ");
 
         try {
             do {
                 userChoice = Integer.parseInt(scanText.nextLine());
-                if (userChoice > 0 && userChoice < 5) {
+                if (userChoice > 0 && userChoice < 6) {
                     invalidChoice = false;
                 } else {
-                    System.out.println("Invalid input. Has to be a number between 1 and 4");
+                    System.out.println("Invalid input. Has to be a number between 1 and 5");
                 }
             } while (invalidChoice);
         } catch (NumberFormatException nfe) {
-            System.out.println("Invalid input. Has to be a number between 1 and 4");
+            System.out.println("Invalid input. Has to be a number between 1 and 5");
         }
         scanText = null;
         return userChoice;

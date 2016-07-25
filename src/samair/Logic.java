@@ -1,5 +1,5 @@
 /*
- *
+ * Main Logic class
  */
 package samair;
 
@@ -76,7 +76,7 @@ public class Logic {
                 // Admins password check
                 do {
                     // User asked for amins password
-                    System.out.println("Admin Password: ");
+                    System.out.println("\nAdmin Login Password: ");
                     String adminPassword = scanText.nextLine();
                     // Admin's password accepted
                     if (adminPassword.equals("pass")) {
@@ -98,7 +98,7 @@ public class Logic {
                     users.getUsers().put(
                             verifyUniqueKey(users.getUsers()),
                             registerAdmin(users.getUsers()));
-                    // Admin chose to login
+                // Admin chose to login
                 } else {
                     admin = adminLogin(users.getUsers());
                     boolean adminContinue = true;
@@ -106,20 +106,27 @@ public class Logic {
                         int userChoice = MENUS.displayAdminMenu(init.getFlightsDataBase());
                         switch (userChoice) {
                             case 1:
-                                ((Admin) init.getAdmin()).
-                                        addFlight(((Admin) init.getAdmin()).
+                                ((Admin)admin).
+                                        addFlight(((Admin)admin).
                                                 createFlight(init.getAirPortsDataBase(),
                                                         init.getFlightsDataBase(),
                                                         init.getAirCraftsDataBase(),
                                                         init.getPilotsDataBase(),
                                                         init.getAirlinesDataBase()),
                                                 init.getFlightsDataBase());
+                                serialize(init);
                                 break;
                             case 2:
-                                ((Admin) init.getAdmin()).updateFlight(init.getFlightsDataBase());
+                                ((Admin)admin).
+                                        updateRemoveFlight(init.getFlightsDataBase(),
+                                                ((Admin)admin).UPDATE);
+                                serialize(init);
                                 break;
                             case 3:
-                                // TODO: Functionality to remove a flight
+                                ((Admin)admin).
+                                        updateRemoveFlight(init.getFlightsDataBase(),
+                                                ((Admin)admin).REMOVE);
+                                serialize(init);
                                 break;
                             case 4:
                                 admin.viewFlights(init.getFlightsDataBase());
@@ -133,7 +140,7 @@ public class Logic {
 
                 }
                 // User chose an option for customer
-            } else {
+            } else if (mainMenuChoice == 2) {
                 // Displays register/login menu for customer to choose.
                 // Customer's choice is saved in an int.
                 int loginMenuChoice = MENUS.displayLoginMenu("Customer");
@@ -147,24 +154,36 @@ public class Logic {
                     customer = customerLogin(users.getUsers());
                     boolean customerContinue = true;
                     do {
-                        int userChoice = MENUS.displayCustomerMenu(init.getFlightsDataBase());
+                        int userChoice = MENUS.displayCustomerMenu(init.
+                                getFlightsDataBase());
                         switch (userChoice) {
                             case 1:
-                                // TODO: Functionality to book a specific flight
-                                break;
-                            case 2:
-                                // TODO: Functionality to search and display flights by destination
-                                break;
-                            case 3:
                                 customer.viewFlights(init.getFlightsDataBase());
                                 break;
+                            case 2:
+                                ((Customer)customer).displayFlightsByDestination(
+                                        init.getFlightsDataBase());
+                                break;
+                            case 3:
+                                ((Customer)customer).bookFlight(((Customer)
+                                        customer).selectFlight(
+                                                init.getFlightsDataBase()),
+                                        init.getBookedFlights());
+                                serialize(init);
+                                break;
                             case 4:
+                                ((Customer)customer).getCutomersFlights().forEach(
+                                        v -> System.out.println(v.toString()));
+                                break;
+                            case 5:
                                 customer = null;
                                 customerContinue = false;
                                 break;
                         }
                     } while (customerContinue);
                 }
+            } else if (mainMenuChoice == 3) {
+                userContinue = false;
             }
         }
     }
@@ -365,7 +384,7 @@ public class Logic {
                 System.out.println("\nThere is no users with given user name."
                         + "\nPlease try again.\n");
             } else {
-                System.out.println("User: " + localAdmin + " found!");
+                System.out.println("User: " + localAdmin + " Logged in!\n");
             }
         } while (invalidUser);
         scanText = null;
@@ -420,7 +439,7 @@ public class Logic {
                 System.out.println("\nThere is no users with given user name."
                         + "\nPlease try again.\n");
             } else {
-                System.out.println("User: " + localCustomer + " found!");
+                System.out.println("User: " + localCustomer + " Logged in!\n");
             }
                 
         } while (invalidUser);

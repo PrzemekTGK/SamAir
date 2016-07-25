@@ -1,8 +1,11 @@
 /*
- * Flight class stroing all the info about the flight
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package samair;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,11 +14,12 @@ import java.util.Date;
  *
  * @author Przemek Stepien
  */
-public class Flight implements Journey {
-
-    private long flightDurationInMilliseconds;
+public class BookedFlight implements Serializable{
+    
+    
+    
     private SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm");
-    private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");    
+    private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");   
     private String flightDuration;
     private String airLines;
     private AirPort origin;
@@ -25,39 +29,40 @@ public class Flight implements Journey {
     private Time departureTime;
     private String flightNumber;
     private AirCraft airCraftAssigned;
+    private String customerFirstName;
+    private String customerLastName;
 
-    public Flight() {
+    public BookedFlight() {
+    }
+    
+    /**
+     * @return the flightDuration
+     */
+    public String getFlightDuration() {
+        return flightDuration;
     }
 
-    public Flight(String airLine, AirPort origin, AirPort destination,
-            AirCraft airCraftAssigned, String flightDuration, long flightInMillis) {
-        this.airLines = airLine;
-        this.origin = origin;
-        this.destination = destination;
-        this.airCraftAssigned = airCraftAssigned;
+    /**
+     * @param flightDuration the flightDuration to set
+     */
+    public void setFlightDuration(String flightDuration) {
         this.flightDuration = flightDuration;
-        this.flightDurationInMilliseconds = flightInMillis;
     }
 
-    // Schedule a created flight
-    public void scheduleFlight(Date dateOfFlight, Time departureTime, Time arrivalTime) {
-        this.dateOfFlight = dateOfFlight;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+    /**
+     * @return the airLines
+     */
+    public String getAirLines() {
+        return airLines;
     }
 
-    // Update a created, scheduled and active fligth
-    public void scheduleFlight(Time arrivalTime) {
-        this.setArrivalTime(arrivalTime);
-        System.gc();
+    /**
+     * @param airLines the airLines to set
+     */
+    public void setAirLines(String airLines) {
+        this.airLines = airLines;
     }
-    
-    // Update a created and scheduled but not active flight
-    public void scheduleFlight(Time departureTime, long flightDuration){
-        this.departureTime = departureTime;
-        this.flightDurationInMilliseconds = flightDuration;
-    }
-    
+
     /**
      * @return the origin
      */
@@ -84,6 +89,20 @@ public class Flight implements Journey {
      */
     public void setDestination(AirPort destination) {
         this.destination = destination;
+    }
+
+    /**
+     * @return the dateOfFlight
+     */
+    public Date getDateOfFlight() {
+        return dateOfFlight;
+    }
+
+    /**
+     * @param dateOfFlight the dateOfFlight to set
+     */
+    public void setDateOfFlight(Date dateOfFlight) {
+        this.dateOfFlight = dateOfFlight;
     }
 
     /**
@@ -143,72 +162,38 @@ public class Flight implements Journey {
     }
 
     /**
-     * @return the timeParser
+     * @return the customerFirstName
      */
-    public SimpleDateFormat getTimeParser() {
-        return timeParser;
+    public String getCustomerFirstName() {
+        return customerFirstName;
     }
 
     /**
-     * @return the dateParser
+     * @param customerFirstName the customerFirstName to set
      */
-    public SimpleDateFormat getDateParser() {
-        return dateParser;
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
     /**
-     * @return the airLines
+     * @return the customerLastName
      */
-    public String getAirLine() {
-        return airLines;
+    public String getCustomerLastName() {
+        return customerLastName;
     }
 
     /**
-     * @param airLine the airLines to set
+     * @param customerLastName the customerLastName to set
      */
-    public void setAirLine(String airLine) {
-        this.airLines = airLine;
+    public void setCustomerLastName(String customerLastName) {
+        this.customerLastName = customerLastName;
     }
 
-    /**
-     * @return the flightDuration
-     */
-    public String getFlightDuration() {
-        return flightDuration;
-    }
-
-    /**
-     * @param flightDuration the flightDuration to set
-     */
-    public void setFlightDuration(String flightDuration) {
-        this.flightDuration = flightDuration;
-    }
-
-    /**
-     * @return the flightDurationInMilliseconds
-     */
-    public long getFlightDurationInMilliseconds() {
-        return flightDurationInMilliseconds;
-    }
-
-    /**
-     * @param flightDurationInMilliseconds the flightDurationInMilliseconds to set
-     */
-    public void setFlightDurationInMilliseconds(long flightDurationInMilliseconds) {
-        this.flightDurationInMilliseconds = flightDurationInMilliseconds;
-    }
-
-    /**
-     * @return the dateOfFlight
-     */
-    public Date getDateOfFlight() {
-        return dateOfFlight;
-    }
-    
     @Override
     public String toString() {
         return "=============================================="
-                + "\nFlight:"
+                + "\nBooked Flight:"
+                + "\nPassanger name: " + customerFirstName + " " + customerLastName + "\n"
                 + "\nAir Lines: " + airLines + "\n"
                 + "\nOrigin: " + origin
                 + "\nDestination: " + destination
@@ -220,6 +205,5 @@ public class Flight implements Journey {
                 + "\nPilot Assinged: " + ((AirPlane) airCraftAssigned).getPilot()
                 + "\nAir Craft Assigned: " + airCraftAssigned 
                 + "==============================================\n";
-        
-    }
+    }   
 }

@@ -4,9 +4,7 @@
 package samair;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
@@ -20,6 +18,9 @@ import java.util.Scanner;
  */
 public class Admin extends User {
 
+    public final static int REMOVE = 0;
+    public final static int UPDATE = 1;
+
     public Admin() {
     }
 
@@ -29,14 +30,15 @@ public class Admin extends User {
     }
 
     /**
-     * Asks admin user for all the details about the flight to be created
-     * and creates and returns a new flight based on those details
+     * Asks admin user for all the details about the flight to be created and
+     * creates and returns a new flight based on those details
+     *
      * @param adb airport data base
      * @param fdb flight data base
      * @param acdb aircraft data base
      * @param pdb pilot data base
-     * @param aldb airlines data base
-     * All parameters are used to get access to certain databases
+     * @param aldb airlines data base All parameters are used to get access to
+     * certain databases
      * @return newly created Flight object
      */
     public Flight createFlight(AirPortDataBase adb, FlightDataBase fdb, AirCraftDataBase acdb,
@@ -54,7 +56,7 @@ public class Admin extends User {
         double flightDurationFloat = fdb.calculateFlightDurationInDecimal(fdb.calculateDistance(
                 originAirPort.getLatitude(), originAirPort.getLongitude(),
                 destinationAirPort.getLatitude(), destinationAirPort.getLongitude()));
-        int flightDurationInMilliseconds = (int)(flightDurationFloat * 60 * 60 * 1000);
+        int flightDurationInMilliseconds = (int) (flightDurationFloat * 60 * 60 * 1000);
         // Convert flight's duration from decimal to text represantation
         String flightDurationText = fdb.convertDecimalToHours(flightDurationFloat);
         // Create a Calendar aboject with current date
@@ -82,22 +84,23 @@ public class Admin extends User {
         // Set daperture and arrivel times for the flight
         Time departureTime = new Time(calendarForFlight.getTimeInMillis());
         calendarForFlight.add(Calendar.HOUR_OF_DAY, flightDurationInMilliseconds);
-        Time arrivalTime = new Time(calendarForFlight.getTimeInMillis());        
+        Time arrivalTime = new Time(calendarForFlight.getTimeInMillis());
         // Create and return the new flight object
         Flight flight = new Flight(airLines, originAirPort, destinationAirPort, airplane, flightDurationText, minute);
         scheduleFlight(flight);
         flight = scheduleFlight(flight);
         System.out.println("CREATED FLIGHT: " + flight.getFlightNumber() + "\n" + flight);
-        return  flight;
+        return flight;
     }
 
     /**
-     * Displays a list of all possible airlines and asks admin user to select one
-     * of those airlines for the flight to be created. 
+     * Displays a list of all possible airlines and asks admin user to select
+     * one of those airlines for the flight to be created.
+     *
      * @param aldb AirLinesDataBase is used to access list of all airlines
      * @param scanInt is used for user's input.
-     * @return 
-     */    
+     * @return
+     */
     private String selectAirLines(AirLinesDataBase aldb, Scanner scanInt) {
         String airLines = null;
         boolean invalidAirLines = true;
@@ -126,7 +129,9 @@ public class Admin extends User {
     }
 
     /**
-     * Automatically finds and selects Dublin Airport as origin AirPort and returns it
+     * Automatically finds and selects Dublin Airport as origin AirPort and
+     * returns it
+     *
      * @param adb is used to get access to all AirPorts
      * @return origin AirPortObject
      */
@@ -145,6 +150,7 @@ public class Admin extends User {
 
     /**
      * Asks user to select the destination AirPort for the flight to be created.
+     *
      * @param adb is used to get access to all AirPorts
      * @return destination AirPort object
      */
@@ -168,6 +174,7 @@ public class Admin extends User {
 
     /**
      * User is asked to select current or next year for the flight
+     *
      * @param scanText is used to get the input from the user
      * @param currentCalendar is used to retrieve current and next year
      * @return the year of the flight
@@ -196,8 +203,9 @@ public class Admin extends User {
 
     /**
      * User is asked to select the month of the flight
+     *
      * @param scanInt is used to get the input form the user
-     * @param year is used to determine chosen year of the flight so user can't 
+     * @param year is used to determine chosen year of the flight so user can't
      * select a month before the current date is current year was selected for
      * the flight
      * @param currentCalendar is used to retrieve current month for validation
@@ -246,6 +254,7 @@ public class Admin extends User {
 
     /**
      * User is asked to select the day of the flight
+     *
      * @param calendarForFlight is used to determine user's month choice so that
      * @param currentCalendar is used to retrieve current date so that the user
      * can't choose a date before the current date
@@ -282,8 +291,8 @@ public class Admin extends User {
                     if (day < 1) {
                         System.out.println("Invalid input. Day can't be lower than 1. Please try again!");
                     } else if (day > calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-                        System.out.println("Invalid input. Day can't be higher than " 
-                                + calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH) +  ". Please try again!");
+                        System.out.println("Invalid input. Day can't be higher than "
+                                + calendarForFlight.getActualMaximum(Calendar.DAY_OF_MONTH) + ". Please try again!");
                     } else {
                         invalidDay = false;
                     }
@@ -298,6 +307,7 @@ public class Admin extends User {
 
     /**
      * User is asked to select the hour of flight
+     *
      * @param scanInt is used to get the input from the user
      * @return the hour of the flight
      */
@@ -325,6 +335,7 @@ public class Admin extends User {
 
     /**
      * User is asked to select the minute of the flight
+     *
      * @param scanInt is used to get the input from the user
      * @return return the minute of the flight
      */
@@ -351,9 +362,10 @@ public class Admin extends User {
     }
 
     /**
-     * Schedules a newly created flight 
-     * @param flight is a newly created flight passed into the method
-     * to be scheduled
+     * Schedules a newly created flight
+     *
+     * @param flight is a newly created flight passed into the method to be
+     * scheduled
      * @return a scheduled flight
      */
     public Flight scheduleFlight(Flight flight) {
@@ -369,6 +381,7 @@ public class Admin extends User {
 
     /**
      * Adds a created and scheduled flight to FlightDataBase
+     *
      * @param flight is the flight to be added to the database
      * @param fdb is the data base that the flight is added to
      */
@@ -377,7 +390,6 @@ public class Admin extends User {
         do {
             fdb.getScheduledFlights().forEach((k, v) -> {
                 if (((Flight) v).getFlightNumber().equalsIgnoreCase(flight.getFlightNumber())) {
-                    System.out.println("DUPLICATED KEY!!!" + "\n" + v + "DUPLICATED KEY!!!");
                     generateFlightNumber(flight);
                 }
             });
@@ -387,14 +399,16 @@ public class Admin extends User {
     }
 
     /**
-     * Updates a scheduled flight
+     * Updates or removes a scheduled flight
+     *
      * @param fdb is used to get access to the flight that has to be updated
      */
-    public void updateFlight(FlightDataBase fdb) {
+    public void updateRemoveFlight(FlightDataBase fdb, int mode) {
         Scanner scanInt = new Scanner(System.in);
         String country = selectCountry(fdb);
         String city = selectCity(fdb, country);
         Flight flight = null;
+        String key = null;
         System.out.println("=========================================================");
 
         for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
@@ -402,28 +416,36 @@ public class Admin extends User {
             if (tempFlight.getDestination().getCountry().replaceAll("\"", "").equalsIgnoreCase(country)
                     && tempFlight.getDestination().getCity().replaceAll("\"", "").equalsIgnoreCase(city)) {
                 flight = tempFlight;
+                key = entry.getKey().toString();
                 System.out.println(tempFlight);
             }
         }
+        switch (mode) {
+            case 0:
+                fdb.getScheduledFlights().remove(key);
+                break;
+            case 1:
+                int hour = selectHour(scanInt);
+                int minute = selectMinute(scanInt);
 
-        int hour = selectHour(scanInt);
-        int minute = selectMinute(scanInt);
-        
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(flight.getDateOfFlight());
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.set(Calendar.MINUTE, minute);
-        Time departureTime = new Time(cal.getTimeInMillis());
-        cal.add(Calendar.MILLISECOND, (int) flight.getFlightDurationInMilliseconds());
-        Time arrivalTime = new Time(cal.getTimeInMillis());
-        flight.setDepartureTime(departureTime);
-        flight.setArrivalTime(arrivalTime);
-        System.out.println(flight);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(flight.getDateOfFlight());
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, minute);
+                Time departureTime = new Time(cal.getTimeInMillis());
+                cal.add(Calendar.MILLISECOND, (int) flight.getFlightDurationInMilliseconds());
+                Time arrivalTime = new Time(cal.getTimeInMillis());
+                flight.setDepartureTime(departureTime);
+                flight.setArrivalTime(arrivalTime);
+                System.out.println(flight);
+                break;
+        }
     }
 
     /**
-     * Generate random date between now and 1 year 
-     * from now to use in scheduleFlight method
+     * Generate random date between now and 1 year from now to use in
+     * scheduleFlight method
+     *
      * @return a random Date object between now and year from now
      */
     private Date generateRandomDate() {
@@ -442,9 +464,11 @@ public class Admin extends User {
     }
 
     /**
-     * Generates a unique flight number based of the info about the flight itself
-     * @param flight is used to retrieve the info about that flight and to generate
-     * the flight number for it
+     * Generates a unique flight number based of the info about the flight
+     * itself
+     *
+     * @param flight is used to retrieve the info about that flight and to
+     * generate the flight number for it
      * @return a Flight object with generated flight number
      */
     private Flight generateFlightNumber(Flight flight) {
@@ -460,301 +484,6 @@ public class Admin extends User {
         return flight;
     }
 
-    /**
-     * Asks user to select the destination country of the flight to search for
-     * from the list of already scheduled flights
-     * @param fdb is used to search the for the flight that has to be updated
-     * @return String with destination country
-     */
-    private String selectCountry(FlightDataBase fdb) {
-        Scanner scanText = new Scanner(System.in);
-        String countryChoice = null;
-        boolean invalidCountry = true;
-        ArrayList<String> countries = displayListOfCountries(fdb);
-        Label:
-        do {
-            System.out.println("Please select country of destination from the list above:");
-            countryChoice = scanText.nextLine();
-            if (countryChoice.length() > 2) {
-                for (String tempCountry : countries) {
-                    if (tempCountry.equalsIgnoreCase(countryChoice)) {
-                        countryChoice = tempCountry;
-                        invalidCountry = false;
-                        System.out.println("Chosen country: " + countryChoice);
-                        break Label;
-                    }
-                }
-            } else if (countryChoice.length() <= 2) {
-                try {
-                    countryChoice = countries.get(Integer.parseInt(countryChoice) - 1);
-                    invalidCountry = false;
-                    System.out.println("Chosen country: " + countryChoice);
-                    break Label;
-                } catch (NumberFormatException nfe) {
-                } catch (ArrayIndexOutOfBoundsException aiobe) {
-                } catch (IndexOutOfBoundsException aiobe) {
-                }
-            }
-            System.out.println("Invalid Input. Please try again!");
-        } while (invalidCountry);
-        return countryChoice;
-    }
-
-    /**
-     * Asks user to select the destination country of the flight to be created
-     * @param adb to get the list of all possible countries for flight to be created
-     * @return String with destination country
-     */
-    private String selectCountry(AirPortDataBase adb) {
-        Scanner scanText = new Scanner(System.in);
-        String countryChoice = null;
-        boolean invalidCountry = true;
-        ArrayList<String> countries = displayListOfCountries(adb);
-        Label:
-        do {
-            System.out.println("Please select country of destination from the list above:");
-            countryChoice = scanText.nextLine();
-            if (countryChoice.length() > 3) {
-                for (String tempCountry : countries) {
-                    if (tempCountry.equalsIgnoreCase(countryChoice)) {
-                        countryChoice = tempCountry;
-                        invalidCountry = false;
-                        System.out.println("Chosen country: " + countryChoice);
-                        break Label;
-                    }
-                }
-            } else if (countryChoice.length() <= 3) {
-                try {
-                    countryChoice = countries.get(Integer.parseInt(countryChoice) - 1);
-                    invalidCountry = false;
-                    System.out.println("Chosen country: " + countryChoice);
-                    break Label;
-                } catch (NumberFormatException nfe) {
-                } catch (ArrayIndexOutOfBoundsException aiobe) {
-                } catch (IndexOutOfBoundsException aiobe) {
-                }
-            }
-            System.out.println("Invalid Input. Please try again!");
-        } while (invalidCountry);
-        return countryChoice;
-    }
-
-    /**
-     * Displays the list of all countries that there is flights for
-     * @param fdb is used to get the list of all the flights 
-     * @return list of countries that there's flight for 
-     */
-    private ArrayList displayListOfCountries(FlightDataBase fdb) {
-        ArrayList<String> countries = new ArrayList<String>();
-        Label:
-        for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
-            Flight tempFlight = (Flight) entry.getValue();
-            if (countries.isEmpty()) {
-                countries.add(tempFlight.getDestination().getCountry().replaceAll("\"", ""));
-                continue;
-            } else {
-                for (String tempCountry : countries) {
-                    if (tempCountry.equalsIgnoreCase(tempFlight.getDestination().getCountry().replaceAll("\"", ""))) {
-                        continue Label;
-                    }
-                }
-                countries.add(tempFlight.getDestination().getCountry().replaceAll("\"", ""));
-            }
-        }
-        System.out.println("=========================================================");
-        Collections.sort(countries);
-        int index = 0;
-        for (String tempCountry : countries) {
-            System.out.println(++index + ". " + tempCountry);
-        }
-        return countries;
-    }
-
-    /**
-     * Displays the list of all possible countries to create flight for
-     * @param adb is used to get the list of all possible countries
-     * @return list of all possible countries 
-     */
-    private ArrayList displayListOfCountries(AirPortDataBase adb) {
-        ArrayList<String> countries = new ArrayList<String>();
-        Label:
-        for (Map.Entry entry : adb.getAirPorts().entrySet()) {
-            AirPort tempAirPort = (AirPort) entry.getValue();
-            if (countries.isEmpty()) {
-                countries.add(tempAirPort.getCountry().replaceAll("\"", ""));
-                continue;
-            } else {
-                for (String tempCountry : countries) {
-                    if (tempCountry.equalsIgnoreCase(tempAirPort.getCountry().replaceAll("\"", ""))) {
-                        continue Label;
-                    }
-                }
-                countries.add(tempAirPort.getCountry().replaceAll("\"", ""));
-            }
-        }
-        System.out.println("=========================================================");
-        Collections.sort(countries);
-        int index = 0;
-        for (String tempCountry : countries) {
-            System.out.println(++index + ". " + tempCountry);
-        }
-        return countries;
-    }
-    
-    /**
-     * Asks user to select the destination city of the flight to search for to 
-     * be updated
-     * @param fdb is used to get access to the list of all existing flights
-     * @param country is used to determine the country of flight to be updated
-     * @return chosen by user city from the given country
-     */
-    private String selectCity(FlightDataBase fdb, String country) {
-        Scanner scanText = new Scanner(System.in);
-        String city = null;
-        ArrayList<String> cities = displayListOfAirPorts(fdb, country);
-        boolean invalidCity = true;
-        Label:
-        do {
-            System.out.println("Please select city of destination from the list above:");
-            city = scanText.nextLine();
-            if (city.length() > 2) {
-                for (String tempCity : cities) {
-                    if (tempCity.equalsIgnoreCase(city)) {
-                        city = tempCity;
-                        invalidCity = false;
-                        System.out.println("Chosen city: " + city);
-                        break Label;
-                    }
-                }
-            } else if (city.length() <= 2) {
-                try {
-                    city = cities.get(Integer.parseInt(city) - 1);
-                    invalidCity = false;
-                    System.out.println("Chosen city: " + city);
-                    break Label;
-                } catch (NumberFormatException nfe) {
-                } catch (ArrayIndexOutOfBoundsException aiobe) {
-                } catch (IndexOutOfBoundsException aiobe) {
-                }
-            }
-            System.out.println("Invalid Input. Please try again!");
-        } while (invalidCity);
-        return city;
-    }
-
-    /**
-     * Asks user to select the destination city of the flight to be created
-     * @param adb is used to get the list of all possible cities for flight creation
-     * @param country is used to determine the country of flight to created
-     * @return chosen by user city from the given country
-     */
-    private String selectCity(AirPortDataBase adb, String country) {
-        Scanner scanText = new Scanner(System.in);
-        String city = null;
-        ArrayList<String> cities = displayListOfAirPorts(adb, country);
-        boolean invalidCity = true;
-        Label:
-        do {
-            System.out.println("Please select city of destination from the list above:");
-            city = scanText.nextLine();
-            if (city.length() > 3) {
-                for (String tempCity : cities) {
-                    if (tempCity.equalsIgnoreCase(city)) {
-                        city = tempCity;
-                        invalidCity = false;
-                        System.out.println("Chosen city: " + city);
-                        break Label;
-                    }
-                }
-            } else if (city.length() <= 3) {
-                try {
-                    city = cities.get(Integer.parseInt(city) - 1);
-                    invalidCity = false;
-                    System.out.println("Chosen city: " + city);
-                    break Label;
-                } catch (NumberFormatException nfe) {
-                } catch (ArrayIndexOutOfBoundsException aiobe) {
-                } catch (IndexOutOfBoundsException aiobe) {
-                }
-            }
-            System.out.println("Invalid Input. Please try again!");
-        } while (invalidCity);
-        return city;
-    }
-
-    /**
-     * Displays the list of all cities from the chosen country of chosen created flight
-     * @param fdb is used to get access to all created flights 
-     * @param country is used to determine the country to search for the city in 
-     * @return the list of cities of all created flights
-     */
-    private ArrayList displayListOfAirPorts(FlightDataBase fdb, String country) {
-        ArrayList<String> cities = new ArrayList<String>();
-        ArrayList<String> citiesAndAirPorts = new ArrayList<String>();        
-        String tempCity = null;
-        String cityAndAirPort = null;
-        for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
-            Flight tempFlight = (Flight) entry.getValue();
-            if (tempFlight.getDestination().getCountry().replaceAll("\"", "").equalsIgnoreCase(country)) {
-                tempCity = tempFlight.getDestination().getCity().replaceAll("\"", "");
-                cityAndAirPort = tempFlight.getDestination().getCity().replaceAll("\"", "") + " - " + tempFlight.getDestination().getName().replaceAll("\"", "");
-                if (cities.isEmpty()) {
-                    cities.add(tempCity);
-                    citiesAndAirPorts.add(cityAndAirPort);
-                } else {
-                    for (String city : cities) {
-                        if (city.equalsIgnoreCase(tempFlight.getDestination().getCity().replaceAll("\"", ""))) {
-                            continue;
-                        }
-                    }
-                    cities.add(tempCity);
-                    citiesAndAirPorts.add(cityAndAirPort);
-                }
-            }
-            tempCity = null;
-        }
-        cities.sort(new StringComparator());
-        citiesAndAirPorts.sort(new StringComparator());
-        citiesAndAirPorts.forEach(city -> System.out.println((citiesAndAirPorts.indexOf(city) + 1) + ". " + city));
-        return cities;
-    }
-
-    /**
-     * Displays the list of all possible cities to create the flight for
-     * @param adb is used to get access to all possible airports to create flight for
-     * @param country is used to determine the country to search for the city in
-     * @return list of all possible cities to create  the flight for
-     */
-    private ArrayList displayListOfAirPorts(AirPortDataBase adb, String country) {
-        ArrayList<String> cities = new ArrayList<String>();
-        ArrayList<String> citiesAndAirPorts = new ArrayList<String>();        
-        String tempCity = null;
-        String cityAndAirPort = null;
-        for (Map.Entry entry : adb.getAirPorts().entrySet()) {
-            AirPort tempAirport = (AirPort) entry.getValue();
-            if (tempAirport.getCountry().replaceAll("\"", "").equalsIgnoreCase(country)) {
-                tempCity = tempAirport.getCity().replaceAll("\"", "");
-                cityAndAirPort = tempAirport.getCity().replaceAll("\"", "") + " - " + tempAirport.getName().replaceAll("\"", "");
-                if (cities.isEmpty()) {
-                    cities.add(tempCity);
-                    citiesAndAirPorts.add(cityAndAirPort);
-                } else {
-                    for (String city : cities) {
-                        if (city.equalsIgnoreCase(tempAirport.getCity().replaceAll("\"", ""))) {
-                            continue;
-                        }
-                    }
-                    cities.add(tempCity);
-                    citiesAndAirPorts.add(cityAndAirPort);
-                }
-            }
-            tempCity = null;
-        }
-        cities.sort(new StringComparator());;
-        citiesAndAirPorts.sort(new StringComparator());
-        citiesAndAirPorts.forEach(city -> System.out.println((citiesAndAirPorts.indexOf(city) + 1) + ". " + city));
-        return cities;
-    }
 
     @Override
     public String toString() {
