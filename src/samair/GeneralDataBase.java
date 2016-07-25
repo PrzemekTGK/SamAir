@@ -1,5 +1,5 @@
 /*
- * Initializer class initializes all pseudo data bases from the files
+ * GeneralDataBase class initializes all pseudo data bases from the files
  */
 package samair;
 
@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author PRZEMEK
  */
-public class Initializer implements Serializable {
+public class GeneralDataBase implements Serializable {
     // Declared pseudo data base objects to store various items neeeded for the program
     private UserDataBase users = new UserDataBase();
     private PilotDataBase pilots = new PilotDataBase();
@@ -27,10 +27,10 @@ public class Initializer implements Serializable {
     private User customer = new Customer("Sam", "123");
 
     /**
-     * Initializes all pseudo data base with randomly created 
+     * Initialises all pseudo data base with randomly created 
      * @param logic is used to get access to some of methods needed 
      */
-    public void initialize(Logic logic){
+    public void fillData(Logic logic){
         getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getAdmin());
         getUsersDataBase().getUsers().put(logic.verifyUniqueKey(getUsersDataBase().getUsers()), getCustomer());
 

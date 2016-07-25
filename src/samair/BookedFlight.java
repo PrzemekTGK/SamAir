@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * TBookedFlight class used to represent flight booked by the customer
  */
 package samair;
 
@@ -15,8 +13,6 @@ import java.util.Date;
  * @author Przemek Stepien
  */
 public class BookedFlight implements Serializable{
-    
-    
     
     private SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");   

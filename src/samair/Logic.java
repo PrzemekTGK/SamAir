@@ -27,38 +27,42 @@ public class Logic {
     private User admin = null;
     // Menus object for acces to various menus
     private final Menus MENUS = new Menus();
-    // Initializer object declared 
-    private Initializer init = null;
+    // GeneralDataBase object declared 
+    private GeneralDataBase dataBase = null;
 
     /**
-     * Initializes Initializer object to file or new instance
+     * Initialises GeneralDataBase object to file or new instance
      *
-     * @return Initializer object initialized with a file or a new instance of
+     * @return GeneralDataBase object initialised with a file or a new instance of
      * an object
      */
-    public Initializer init() {
-        // Initializer object loaded in from the file or created and saved to the file
+    public GeneralDataBase initialiseDataBase() {
+        // GeneralDataBase object loaded in from the file or created and saved to the file
         try (FileInputStream fileIn = new FileInputStream("Data.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);){            
-            init = (Initializer) in.readObject();
+            dataBase = (GeneralDataBase) in.readObject();
             System.out.println("Data.ser was loaded");
         } catch (IOException i) {
-            init = new Initializer();
-            init.initialize(this);
-            serialize(init);
+            dataBase = new GeneralDataBase();
+            dataBase.fillData(this);
+            serialize(dataBase);
         } catch (ClassNotFoundException c) {
             System.out.println("Initializer class not found");
         }
-        return init;
+        return dataBase;
     }
 
     /**
      * Starting point of the program. Allows for admin/customer registration and
-     * login. Admin needs to know the passweord to be able to do either one.
+     * login. Admin needs to know the password to be able to do either one.
      *
      * @param users is used to get access to pseudo data base of users
      */
-    public void startProgram(UserDataBase users) {
+    public void startProgram() {
+        
+        // Initiliaze everything
+        dataBase = initialiseDataBase();
+        UserDataBase users = dataBase.getUsersDataBase();
         // Scanner object for User input
         Scanner scanText = new Scanner(System.in);
 
@@ -103,33 +107,33 @@ public class Logic {
                     admin = adminLogin(users.getUsers());
                     boolean adminContinue = true;
                     do {
-                        int userChoice = MENUS.displayAdminMenu(init.getFlightsDataBase());
+                        int userChoice = MENUS.displayAdminMenu(dataBase.getFlightsDataBase());
                         switch (userChoice) {
                             case 1:
                                 ((Admin)admin).
                                         addFlight(((Admin)admin).
-                                                createFlight(init.getAirPortsDataBase(),
-                                                        init.getFlightsDataBase(),
-                                                        init.getAirCraftsDataBase(),
-                                                        init.getPilotsDataBase(),
-                                                        init.getAirlinesDataBase()),
-                                                init.getFlightsDataBase());
-                                serialize(init);
+                                                createFlight(dataBase.getAirPortsDataBase(),
+                                                        dataBase.getFlightsDataBase(),
+                                                        dataBase.getAirCraftsDataBase(),
+                                                        dataBase.getPilotsDataBase(),
+                                                        dataBase.getAirlinesDataBase()),
+                                                dataBase.getFlightsDataBase());
+                                serialize(dataBase);
                                 break;
                             case 2:
                                 ((Admin)admin).
-                                        updateRemoveFlight(init.getFlightsDataBase(),
+                                        updateRemoveFlight(dataBase.getFlightsDataBase(),
                                                 ((Admin)admin).UPDATE);
-                                serialize(init);
+                                serialize(dataBase);
                                 break;
                             case 3:
                                 ((Admin)admin).
-                                        updateRemoveFlight(init.getFlightsDataBase(),
+                                        updateRemoveFlight(dataBase.getFlightsDataBase(),
                                                 ((Admin)admin).REMOVE);
-                                serialize(init);
+                                serialize(dataBase);
                                 break;
                             case 4:
-                                admin.viewFlights(init.getFlightsDataBase());
+                                admin.viewFlights(dataBase.getFlightsDataBase());
                                 break;
                             case 5:
                                 admin = null;
@@ -154,22 +158,22 @@ public class Logic {
                     customer = customerLogin(users.getUsers());
                     boolean customerContinue = true;
                     do {
-                        int userChoice = MENUS.displayCustomerMenu(init.
+                        int userChoice = MENUS.displayCustomerMenu(dataBase.
                                 getFlightsDataBase());
                         switch (userChoice) {
                             case 1:
-                                customer.viewFlights(init.getFlightsDataBase());
+                                customer.viewFlights(dataBase.getFlightsDataBase());
                                 break;
                             case 2:
                                 ((Customer)customer).displayFlightsByDestination(
-                                        init.getFlightsDataBase());
+                                        dataBase.getFlightsDataBase());
                                 break;
                             case 3:
                                 ((Customer)customer).bookFlight(((Customer)
                                         customer).selectFlight(
-                                                init.getFlightsDataBase()),
-                                        init.getBookedFlights());
-                                serialize(init);
+                                                dataBase.getFlightsDataBase()),
+                                        dataBase.getBookedFlights());
+                                serialize(dataBase);
                                 break;
                             case 4:
                                 ((Customer)customer).getCutomersFlights().forEach(
