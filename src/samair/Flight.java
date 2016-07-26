@@ -39,20 +39,35 @@ public class Flight implements Journey {
         this.flightDurationInMilliseconds = flightInMillis;
     }
 
-    // Schedule a created flight
+    /**
+     * Schedules a created flight
+     * 
+     * @param dateOfFlight is used to set the date of the flight
+     * @param departureTime is used to set the departure time of the flight
+     * @param arrivalTime  is used to set the arrival time of the flight
+     */
     public void scheduleFlight(Date dateOfFlight, Time departureTime, Time arrivalTime) {
         this.dateOfFlight = dateOfFlight;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
     }
 
-    // Update a created, scheduled and active fligth
+    /**
+     * Updates a created, scheduled and active flight
+     * 
+     * @param arrivalTime is used to update the arrival time of the flight
+     */
     public void scheduleFlight(Time arrivalTime) {
         this.setArrivalTime(arrivalTime);
         System.gc();
     }
     
-    // Update a created and scheduled but not active flight
+    /**
+     * Update a created and scheduled but not active flight
+     * 
+     * @param departureTime is used to set the departure time of flight
+     * @param flightDuration is used to set the duration of the flight
+     */
     public void scheduleFlight(Time departureTime, long flightDuration){
         this.departureTime = departureTime;
         this.flightDurationInMilliseconds = flightDuration;

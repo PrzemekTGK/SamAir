@@ -27,6 +27,8 @@ public class AirPlane implements AirCraft{
     }
   
     /**
+     * Gets the make of the AirPlane
+     * 
      * @return the make
      */
     public String getMake() {
@@ -34,6 +36,8 @@ public class AirPlane implements AirCraft{
     }
 
     /**
+     * Gets the make of the AirPlane
+     * 
      * @return the model
      */
     public String getModel() {
@@ -41,6 +45,8 @@ public class AirPlane implements AirCraft{
     }
 
     /**
+     * Gets the pilot of the AirPlane
+     * 
      * @return the pilot
      */
     public Pilot getPilot() {
@@ -48,6 +54,8 @@ public class AirPlane implements AirCraft{
     }
     
     /**
+     * Sets the Pilot for the AirPlane
+     * 
      * @param pilot the pilot to set
      */
     public void setPilot(Pilot pilot) {
@@ -55,6 +63,8 @@ public class AirPlane implements AirCraft{
     }
 
     /**
+     * Gets seats capacity of the AirPlane
+     * 
      * @return the seatsCapacity
      */
     public short getSeatsCapacity() {
@@ -62,6 +72,8 @@ public class AirPlane implements AirCraft{
     }
 
     /**
+     * Checks if the AirPlane is active and assigned to the flight or not
+     * 
      * @return the active
      */
     public boolean isActive() {
@@ -69,12 +81,19 @@ public class AirPlane implements AirCraft{
     }
 
     /**
+     * Sets the AirPlane to be active (assigned to the flight)
+     * 
      * @param active the active to set
      */
     public void setActive(boolean active) {
         this.active = active;
     }
     
+    /**
+     * Displays the details of the AirPlane to the console
+     * 
+     * @return String representation of AirPlane class
+     */
     @Override
     public String toString() {
         return "AirPlane:" 

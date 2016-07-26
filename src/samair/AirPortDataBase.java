@@ -19,7 +19,7 @@ public class AirPortDataBase implements Serializable{
     private HashMap<Integer, AirPort> airPorts;
 
     public AirPortDataBase() {
-        this.airPorts = new HashMap<Integer, AirPort>();
+        this.airPorts = new HashMap<>();
     }
 
     /**
@@ -29,6 +29,12 @@ public class AirPortDataBase implements Serializable{
         return airPorts;
     }
 
+    /**
+     * Generates AirPort objects from csv file and stores them in the HashMap airPorts
+     * 
+     * @param file is a csv file containing info about the airport
+     * @throws FileNotFoundException if file is not found
+     */
     public void generateAirportsFromCsvFile(File file) throws FileNotFoundException {
         final int name = 1;
         final int city = 2;
@@ -36,7 +42,7 @@ public class AirPortDataBase implements Serializable{
         final int longitude = 6;
         final int latitude = 7;
         int index = 0;
-        ArrayList<String> airportAsList = new ArrayList<String>();
+        ArrayList<String> airportAsList = new ArrayList<>();
         Scanner scanFile = new Scanner(file);
         scanFile.useDelimiter(",");
 

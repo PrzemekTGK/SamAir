@@ -16,10 +16,12 @@ public class BookedFlightsDataBase implements Serializable{
         private HashMap<String, ArrayList<BookedFlight>> bookedFlights;
 
     public BookedFlightsDataBase() {
-        this.bookedFlights = new HashMap<String, ArrayList<BookedFlight>>();
+        this.bookedFlights = new HashMap<>();
     }
 
     /**
+     * Gets the HashMap object bookedFlights that's storing all the bookedFlight objects
+     * 
      * @return the airCrafts
      */
     public HashMap<String, ArrayList<BookedFlight>> getBookedFlights() {

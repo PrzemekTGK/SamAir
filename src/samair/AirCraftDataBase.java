@@ -20,10 +20,12 @@ public class AirCraftDataBase implements Serializable {
     private HashMap<String, AirCraft> airCrafts;
 
     public AirCraftDataBase() {
-        this.airCrafts = new HashMap<String, AirCraft>();
+        this.airCrafts = new HashMap<>();
     }
 
     /**
+     * Gets the HashMap object airCrafts that's storing all the AirCrafts
+     * 
      * @return the airCrafts
      */
     public HashMap<String, AirCraft> getAirCrafts() {
@@ -31,14 +33,15 @@ public class AirCraftDataBase implements Serializable {
     }
 
     /**
-     * Read csv files of specific format containing details about airplanes
+     * Reads csv files of specific format containing details about airplanes
+     * 
      * @param file is passed to define the csv file to read from
      * @return ArrayList populated with elements from the csv file
      * @throws FileNotFoundException if file is not found
      */
     public ArrayList readAirplanesFromCsvFile(File file) throws FileNotFoundException {
         // Csv ArrayList object to store read in cvs file 
-        ArrayList<String> csvList = new ArrayList<String>();
+        ArrayList<String> csvList = new ArrayList<>();
         // Scanner object to read in passed in csv file
         Scanner scanFile = new Scanner(file);
         // Set a delimiter for the csv file
@@ -56,6 +59,7 @@ public class AirCraftDataBase implements Serializable {
 
     /**
      * Generates an ArrayList of airplanes as ArrayLists
+     * 
      * @param csvList is used to retrieve detail about airplanes
      * @return  an ArrayList of airplanes as ArrayLists
      */
@@ -76,7 +80,7 @@ public class AirCraftDataBase implements Serializable {
         for (int i = 0; i < csvList.size();) {
             /* New airPlaneList ArrayList object created to store details
              about individual airplane */
-            airplaneAsList = new ArrayList<String>();
+            airplaneAsList = new ArrayList<>();
 
             /* Check first index of csvList and if it's equal to
              separation String airplaneMake set before */
@@ -130,7 +134,8 @@ public class AirCraftDataBase implements Serializable {
     }
 
     /**
-     * Generate a random airCraft object 
+     * Generates a random airCraft object 
+     * 
      * @param airPlanes ArrayList of ArrayLists read in
      * from the file containing details about airplanes
      * @return newly created AirCraft object

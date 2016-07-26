@@ -19,6 +19,8 @@ public class UserDataBase implements Serializable{
     
 
     /**
+     * Gets the HashMap object users that's storing all the Users
+     * 
      * @return the users
      */
     public HashMap<String, User> getUsers() {

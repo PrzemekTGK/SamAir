@@ -18,7 +18,13 @@ import java.util.Scanner;
  */
 public class Admin extends User {
 
+    /**
+     * constant field to set the behaviour of updateRemoveFlight() method to remove
+     */
     public final static int REMOVE = 0;
+    /**
+     * constant field to set the behaviour of updateRemoveFlight() method to update
+     */
     public final static int UPDATE = 1;
 
     public Admin() {
@@ -173,7 +179,7 @@ public class Admin extends User {
     }
 
     /**
-     * User is asked to select current or next year for the flight
+     * Asks the user to select current or next year for the flight
      *
      * @param scanText is used to get the input from the user
      * @param currentCalendar is used to retrieve current and next year
@@ -202,7 +208,7 @@ public class Admin extends User {
     }
 
     /**
-     * User is asked to select the month of the flight
+     * Asks the user to select the month of the flight
      *
      * @param scanInt is used to get the input form the user
      * @param year is used to determine chosen year of the flight so user can't
@@ -253,7 +259,7 @@ public class Admin extends User {
     }
 
     /**
-     * User is asked to select the day of the flight
+     * Asks the user to select the day of the flight
      *
      * @param calendarForFlight is used to determine user's month choice so that
      * @param currentCalendar is used to retrieve current date so that the user
@@ -306,7 +312,7 @@ public class Admin extends User {
     }
 
     /**
-     * User is asked to select the hour of flight
+     * Asks the user to select the hour of flight
      *
      * @param scanInt is used to get the input from the user
      * @return the hour of the flight
@@ -334,7 +340,7 @@ public class Admin extends User {
     }
 
     /**
-     * User is asked to select the minute of the flight
+     * Asks the user to select the minute of the flight
      *
      * @param scanInt is used to get the input from the user
      * @return return the minute of the flight
@@ -484,11 +490,14 @@ public class Admin extends User {
         return flight;
     }
 
-
+    /**
+     * Displays admin's user name to the screen
+     * 
+     * @return String representation of Admin class
+     */
     @Override
     public String toString() {
         return "Admin:"
-                + "\nUser Name = " + getUserName()
-                + "\nPassword = " + getPassword();
+                + "\nUser Name = " + getUserName();
     }
 }

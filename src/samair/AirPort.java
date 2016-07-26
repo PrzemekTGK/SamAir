@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author Przemek Stepien
  */
 public class AirPort implements Serializable{
+    
     private String name;
     private String city;
     private String country;
@@ -25,6 +26,8 @@ public class AirPort implements Serializable{
     }
 
     /**
+     * Gets the name of the AirPort
+     * 
      * @return the name
      */
     public String getName() {
@@ -32,6 +35,8 @@ public class AirPort implements Serializable{
     }
 
     /**
+     * Gets the city of the AirPort
+     * 
      * @return the city
      */
     public String getCity() {
@@ -39,6 +44,8 @@ public class AirPort implements Serializable{
     }
 
     /**
+     * Gets the country of the AirPort
+     * 
      * @return the country
      */
     public String getCountry() {
@@ -46,6 +53,8 @@ public class AirPort implements Serializable{
     }
 
     /**
+     * Gets the longitude of the AirPort
+     * 
      * @return the longitude
      */
     public float getLongitude() {
@@ -53,12 +62,19 @@ public class AirPort implements Serializable{
     }
 
     /**
+     * Gets the latitude of the AirPort
+     * 
      * @return the latitude
      */
     public float getLatitude() {
         return latitude;
     }
 
+    /**
+     * Displays all the details about the AirPort to the console
+     * 
+     * @return String representation of AirPort class
+     */
     @Override
     public String toString() {
         return "AirPort:"
