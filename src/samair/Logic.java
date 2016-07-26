@@ -55,8 +55,7 @@ public class Logic {
     /**
      * Starting point of the program. Allows for admin/customer registration and
      * login. Admin needs to know the password to be able to do either one.
-     *
-     * @param users is used to get access to pseudo data base of users
+     * 
      */
     public void startProgram() {
         

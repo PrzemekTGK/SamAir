@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author PRZEMEK
+ * @author Przemek Stepien
  */
 public class GeneralDataBase implements Serializable {
     // Declared pseudo data base objects to store various items neeeded for the program
@@ -19,7 +19,7 @@ public class GeneralDataBase implements Serializable {
     private PilotDataBase pilots = new PilotDataBase();
     private AirPortDataBase airPorts = new AirPortDataBase();
     private AirCraftDataBase airCrafts = new AirCraftDataBase();
-    private FlightDataBase flights = new FlightDataBase();
+    private JourneyDataBase flights = new JourneyDataBase();
     private BookedFlightsDataBase bookedFlights= new BookedFlightsDataBase();
     private AirLinesDataBase airlines = new AirLinesDataBase(new File("airlines.txt"));
     // Dummy users data
@@ -116,7 +116,7 @@ public class GeneralDataBase implements Serializable {
     /**
      * @return the flight
      */
-    public FlightDataBase getFlightsDataBase() {
+    public JourneyDataBase getFlightsDataBase() {
         return flights;
     }
 

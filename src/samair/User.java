@@ -25,7 +25,7 @@ public abstract class User implements Serializable {
      *
      * @param fdb is the date base of flights to be displayed
      */
-    void viewFlights(FlightDataBase fdb) {
+    void viewFlights(JourneyDataBase fdb) {
         fdb.getScheduledFlights().forEach((k, v) -> System.out.println(v));
     }
 
@@ -37,9 +37,9 @@ public abstract class User implements Serializable {
      * @param country is used to determine the country to search for the city in
      * @return the list of cities of all created flights
      */
-    private ArrayList displayListOfAirPorts(FlightDataBase fdb, String country) {
-        ArrayList<String> cities = new ArrayList<String>();
-        ArrayList<String> citiesAndAirPorts = new ArrayList<String>();
+    private ArrayList displayListOfAirPorts(JourneyDataBase fdb, String country) {
+        ArrayList<String> cities = new ArrayList<>();
+        ArrayList<String> citiesAndAirPorts = new ArrayList<>();
         String tempCity = null;
         String cityAndAirPort = null;
         for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
@@ -77,8 +77,8 @@ public abstract class User implements Serializable {
      * @return list of all possible cities to create the flight for
      */
     private ArrayList displayListOfAirPorts(AirPortDataBase adb, String country) {
-        ArrayList<String> cities = new ArrayList<String>();
-        ArrayList<String> citiesAndAirPorts = new ArrayList<String>();
+        ArrayList<String> cities = new ArrayList<>();
+        ArrayList<String> citiesAndAirPorts = new ArrayList<>();
         String tempCity = null;
         String cityAndAirPort = null;
         for (Map.Entry entry : adb.getAirPorts().entrySet()) {
@@ -113,8 +113,8 @@ public abstract class User implements Serializable {
      * @param fdb is used to get the list of all the flights
      * @return list of countries that there's flight for
      */
-    private ArrayList displayListOfCountries(FlightDataBase fdb) {
-        ArrayList<String> countries = new ArrayList<String>();
+    private ArrayList displayListOfCountries(JourneyDataBase fdb) {
+        ArrayList<String> countries = new ArrayList<>();
         Label:
         for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
             Flight tempFlight = (Flight) entry.getValue();
@@ -146,7 +146,7 @@ public abstract class User implements Serializable {
      * @return list of all possible countries
      */
     private ArrayList displayListOfCountries(AirPortDataBase adb) {
-        ArrayList<String> countries = new ArrayList<String>();
+        ArrayList<String> countries = new ArrayList<>();
         Label:
         for (Map.Entry entry : adb.getAirPorts().entrySet()) {
             AirPort tempAirPort = (AirPort) entry.getValue();
@@ -178,7 +178,7 @@ public abstract class User implements Serializable {
      * @param fdb is used to search the for the flight that has to be updated
      * @return String with destination country
      */
-    String selectCountry(FlightDataBase fdb) {
+    String selectCountry(JourneyDataBase fdb) {
         Scanner scanText = new Scanner(System.in);
         String countryChoice = null;
         boolean invalidCountry = true;
@@ -261,7 +261,7 @@ public abstract class User implements Serializable {
      * @param country is used to determine the country of flight to be updated
      * @return chosen by user city from the given country
      */
-    String selectCity(FlightDataBase fdb, String country) {
+    String selectCity(JourneyDataBase fdb, String country) {
         Scanner scanText = new Scanner(System.in);
         String city = null;
         ArrayList<String> cities = displayListOfAirPorts(fdb, country);

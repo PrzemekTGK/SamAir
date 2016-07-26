@@ -26,7 +26,7 @@ public class Customer extends User {
         setPassword(password);
     }
     
-    public void displayFlightsByDestination(FlightDataBase fdb){
+    public void displayFlightsByDestination(JourneyDataBase fdb){
         String country = selectCountry(fdb);
         String city  = selectCity(fdb, country); 
         for (Map.Entry entry : fdb.getScheduledFlights().entrySet()) {
@@ -38,7 +38,7 @@ public class Customer extends User {
         }
     }    
 
-    public Flight selectFlight(FlightDataBase fdb) {
+    public Flight selectFlight(JourneyDataBase fdb) {
         String country = selectCountry(fdb);
         String city = selectCity(fdb, country);
         Flight flight = null;

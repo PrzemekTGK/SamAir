@@ -41,7 +41,7 @@ public class Admin extends User {
      * certain databases
      * @return newly created Flight object
      */
-    public Flight createFlight(AirPortDataBase adb, FlightDataBase fdb, AirCraftDataBase acdb,
+    public Flight createFlight(AirPortDataBase adb, JourneyDataBase fdb, AirCraftDataBase acdb,
             PilotDataBase pdb, AirLinesDataBase aldb) {
         // Declare and instantiate scanner objects for user's input
         Scanner scanText = new Scanner(System.in);
@@ -380,12 +380,12 @@ public class Admin extends User {
     }
 
     /**
-     * Adds a created and scheduled flight to FlightDataBase
+     * Adds a created and scheduled flight to JourneyDataBase
      *
      * @param flight is the flight to be added to the database
      * @param fdb is the data base that the flight is added to
      */
-    public void addFlight(Flight flight, FlightDataBase fdb) {
+    public void addFlight(Flight flight, JourneyDataBase fdb) {
         boolean duplicatedKey = true;
         do {
             fdb.getScheduledFlights().forEach((k, v) -> {
@@ -403,7 +403,7 @@ public class Admin extends User {
      *
      * @param fdb is used to get access to the flight that has to be updated
      */
-    public void updateRemoveFlight(FlightDataBase fdb, int mode) {
+    public void updateRemoveFlight(JourneyDataBase fdb, int mode) {
         Scanner scanInt = new Scanner(System.in);
         String country = selectCountry(fdb);
         String city = selectCity(fdb, country);

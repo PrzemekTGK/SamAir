@@ -31,7 +31,7 @@ public class AirLinesDataBase implements Serializable{
             // Read in the file
             scanFile = new Scanner(file);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FlightDataBase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JourneyDataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         // Populate the list from with the content of the file
         while (scanFile.hasNextLine()) {

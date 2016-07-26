@@ -1,5 +1,5 @@
 /*
- * TBookedFlight class used to represent flight booked by the customer
+ * BookedFlight class used to represent flight booked by the customer
  */
 package samair;
 
@@ -11,9 +11,10 @@ import java.util.Date;
 /**
  *
  * @author Przemek Stepien
+ * 
  */
 public class BookedFlight implements Serializable{
-    
+
     private SimpleDateFormat timeParser = new SimpleDateFormat("HH:mm");
     private SimpleDateFormat dateParser = new SimpleDateFormat("dd-MM-yyyy");   
     private String flightDuration;
@@ -32,6 +33,8 @@ public class BookedFlight implements Serializable{
     }
     
     /**
+     * Gets flight duration as String
+     * 
      * @return the flightDuration
      */
     public String getFlightDuration() {
@@ -39,6 +42,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets flight duration.
+     * 
      * @param flightDuration the flightDuration to set
      */
     public void setFlightDuration(String flightDuration) {
@@ -46,6 +51,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets AirLines assigned to the flight
+     * 
      * @return the airLines
      */
     public String getAirLines() {
@@ -53,6 +60,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets AirLines to the flight
+     * 
      * @param airLines the airLines to set
      */
     public void setAirLines(String airLines) {
@@ -60,6 +69,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets origin of the flight
+     *
      * @return the origin
      */
     public AirPort getOrigin() {
@@ -67,6 +78,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets origin of the flight
+     * 
      * @param origin the origin to set
      */
     public void setOrigin(AirPort origin) {
@@ -74,6 +87,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets destination of the flight
+     * 
      * @return the destination
      */
     public AirPort getDestination() {
@@ -81,6 +96,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets destination of the flight
+     * 
      * @param destination the destination to set
      */
     public void setDestination(AirPort destination) {
@@ -88,6 +105,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets date of the flight
+     * 
      * @return the dateOfFlight
      */
     public Date getDateOfFlight() {
@@ -95,6 +114,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets date of the flight
+     * 
      * @param dateOfFlight the dateOfFlight to set
      */
     public void setDateOfFlight(Date dateOfFlight) {
@@ -102,6 +123,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets arrival time of the flight
+     * 
      * @return the arrivalTime
      */
     public Time getArrivalTime() {
@@ -109,6 +132,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets arrival time of the flight
+     * 
      * @param arrivalTime the arrivalTime to set
      */
     public void setArrivalTime(Time arrivalTime) {
@@ -116,6 +141,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets departure time of the flight
+     * 
      * @return the departureTime
      */
     public Time getDepartureTime() {
@@ -123,6 +150,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets departure time of the flight
+     * 
      * @param departureTime the departureTime to set
      */
     public void setDepartureTime(Time departureTime) {
@@ -130,6 +159,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets the number of the flight
+     * 
      * @return the flightNumber
      */
     public String getFlightNumber() {
@@ -137,6 +168,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets the number of the flight
+     * 
      * @param flightNumber the flightNumber to set
      */
     public void setFlightNumber(String flightNumber) {
@@ -144,6 +177,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets AirCraft assigned to the flight
+     * 
      * @return the airCraftAssigned
      */
     public AirCraft getAirCraftAssigned() {
@@ -151,6 +186,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets AirCraft assigned to the flight
+     * 
      * @param airCraftAssigned the airCraftAssigned to set
      */
     public void setAirCraftAssigned(AirCraft airCraftAssigned) {
@@ -158,6 +195,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets the first name of the customer that booked the flight
+     * 
      * @return the customerFirstName
      */
     public String getCustomerFirstName() {
@@ -165,6 +204,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets the first name of the customer that booked the flight
+     * 
      * @param customerFirstName the customerFirstName to set
      */
     public void setCustomerFirstName(String customerFirstName) {
@@ -172,6 +213,8 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Gets the last name of the customer that booked the flight
+     * 
      * @return the customerLastName
      */
     public String getCustomerLastName() {
@@ -179,12 +222,19 @@ public class BookedFlight implements Serializable{
     }
 
     /**
+     * Sets the last name of the customer that booked the flight
+     * 
      * @param customerLastName the customerLastName to set
      */
     public void setCustomerLastName(String customerLastName) {
         this.customerLastName = customerLastName;
     }
 
+    /**
+     * Prints out all the fields of this class and their values to the console
+     * 
+     * @return String representation of BookedFlight object
+     */
     @Override
     public String toString() {
         return "=============================================="

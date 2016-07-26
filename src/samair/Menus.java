@@ -83,7 +83,7 @@ public class Menus {
     }
 
     // Displays menu for logged in customer
-    public int displayCustomerMenu(FlightDataBase fdb) {
+    public int displayCustomerMenu(JourneyDataBase fdb) {
         Scanner scanText = new Scanner(System.in);
         boolean invalidChoice = true;
         int userChoice = 0;
@@ -112,7 +112,7 @@ public class Menus {
     }
 
     // Displays menu for logged in admin
-    public int displayAdminMenu(FlightDataBase fdb) {
+    public int displayAdminMenu(JourneyDataBase fdb) {
         Scanner scanText = new Scanner(System.in);
         boolean invalidChoice = true;
         int userChoice = 0;

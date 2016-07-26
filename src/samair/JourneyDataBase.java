@@ -1,5 +1,5 @@
 /*
- * FlightDataBase class is used to store all scheduled flights
+ * JourneyDataBase class is used to store all scheduled flights
  */
 package samair;
 
@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author Przemek Stepien
  */
-public class FlightDataBase implements Serializable {
+public class JourneyDataBase implements Serializable {
 
     // HashMap of upcoming flights
     private HashMap<String, Journey> scheduledFlights;
@@ -22,9 +22,9 @@ public class FlightDataBase implements Serializable {
      * Constructor initializes the hashmap of flights to a instance
      * of hashmap object.
      */
-    public FlightDataBase( ) {
+    public JourneyDataBase( ) {
         // Initialized HashMap to new instance of this object
-        this.scheduledFlights = new HashMap<String, Journey>();
+        this.scheduledFlights = new HashMap<>();
     }
 
     /**
