@@ -106,7 +106,7 @@ public class Logic {
                     admin = adminLogin(users.getUsers());
                     boolean adminContinue = true;
                     do {
-                        int userChoice = MENUS.displayAdminMenu(dataBase.getFlightsDataBase());
+                        int userChoice = MENUS.displayAdminMenu();
                         switch (userChoice) {
                             case 1:
                                 ((Admin)admin).
@@ -157,8 +157,7 @@ public class Logic {
                     customer = customerLogin(users.getUsers());
                     boolean customerContinue = true;
                     do {
-                        int userChoice = MENUS.displayCustomerMenu(dataBase.
-                                getFlightsDataBase());
+                        int userChoice = MENUS.displayCustomerMenu();
                         switch (userChoice) {
                             case 1:
                                 customer.viewFlights(dataBase.getFlightsDataBase());
