@@ -25,6 +25,8 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Gets pilot's name
+     * 
      * @return the name
      */
     public String getName() {
@@ -32,6 +34,8 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Sets pilot's name
+     * 
      * @param name the name to set
      */
     public void setName(String name) {
@@ -39,6 +43,8 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Gets pilot's ID 
+     * 
      * @return the pilotID
      */
     public String getPilotID() {
@@ -46,6 +52,8 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Sets pilot's ID 
+     * 
      * @param pilotID the pilotID to set
      */
     public void setPilotID(String pilotID) {
@@ -53,6 +61,8 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Gets pilot's rating
+     * 
      * @return the rating
      */
     public byte getRating() {
@@ -60,12 +70,19 @@ public class Pilot implements Serializable{
     }
 
     /**
+     * Sets pilot's rating
+     * 
      * @param rating the rating to set
      */
     public void setRating(byte rating) {
         this.rating = rating;
     }
 
+    /**
+     * Displays all the details about the pilot to the console
+     * 
+     * @return String representation of Pilot class
+     */
     @Override
     public String toString() {
         return "Pilot:" 

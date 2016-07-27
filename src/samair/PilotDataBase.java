@@ -115,7 +115,9 @@ public class PilotDataBase implements Serializable {
     }
     
     /**
-     * @return the pilots
+     * Gets the the HashMap containing all the pilots
+     * 
+     * @return the pilots HashMap
      */
     public HashMap<String, Pilot> getPilots() {
         return pilots;

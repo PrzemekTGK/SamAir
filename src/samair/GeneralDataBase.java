@@ -28,6 +28,7 @@ public class GeneralDataBase implements Serializable {
 
     /**
      * Initialises all pseudo data base with randomly created 
+     * 
      * @param logic is used to get access to some of methods needed 
      */
     public void fillData(Logic logic){
@@ -79,6 +80,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the booked flights database
+     * 
      * @return the bookedFlights
      */
     public BookedFlightsDataBase getBookedFlights() {
@@ -86,6 +89,8 @@ public class GeneralDataBase implements Serializable {
     }
     
     /**
+     * Gets the users database
+     * 
      * @return the users
      */
     public UserDataBase getUsersDataBase() {
@@ -93,6 +98,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the pilots database
+     * 
      * @return the pilots
      */
     public PilotDataBase getPilotsDataBase() {
@@ -100,6 +107,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the airports database
+     * 
      * @return the airPorts
      */
     public AirPortDataBase getAirPortsDataBase() {
@@ -107,6 +116,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the aircrafts database
+     * 
      * @return the airCrafts
      */
     public AirCraftDataBase getAirCraftsDataBase() {
@@ -114,6 +125,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the journeys database
+     * 
      * @return the flight
      */
     public JourneyDataBase getFlightsDataBase() {
@@ -121,6 +134,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the airlines database
+     * 
      * @return the airlines
      */
     public AirLinesDataBase getAirlinesDataBase() {
@@ -128,6 +143,8 @@ public class GeneralDataBase implements Serializable {
     }   
 
     /**
+     * Gets the admins database
+     * 
      * @return the admin
      */
     public User getAdmin() {
@@ -135,6 +152,8 @@ public class GeneralDataBase implements Serializable {
     }
 
     /**
+     * Gets the customers database
+     * 
      * @return the customer
      */
     public User getCustomer() {

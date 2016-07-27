@@ -204,6 +204,7 @@ public class JourneyDataBase implements Serializable {
 
     /**
      * Convert degrees to radians
+     * 
      * @param deg degrees to be converted
      * @return degrees converted to radians
      */
@@ -213,6 +214,7 @@ public class JourneyDataBase implements Serializable {
 
     /**
      * Convert radians to degrees
+     * 
      * @param rad radians to be converted 
      * @return radians converted to degrees
      */
@@ -221,6 +223,8 @@ public class JourneyDataBase implements Serializable {
     }
 
     /**
+     * Gets scheduled flights HashMap
+     * 
      * @return the scheduledFlights
      */
     public HashMap<String, Journey> getScheduledFlights() {

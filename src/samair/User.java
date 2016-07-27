@@ -340,6 +340,8 @@ public abstract class User implements Serializable {
     ;
     
     /**
+     * Gets user's name
+     * 
      * @return the userName
      */
     public String getUserName() {
@@ -347,6 +349,8 @@ public abstract class User implements Serializable {
     }
 
     /**
+     * Sets user's name
+     * 
      * @param userName the userName to set
      */
     public void setUserName(String userName) {
@@ -354,6 +358,8 @@ public abstract class User implements Serializable {
     }
 
     /**
+     * Gets user's password
+     * 
      * @return the password
      */
     public String getPassword() {
@@ -361,16 +367,22 @@ public abstract class User implements Serializable {
     }
 
     /**
+     * Sets user's password
+     * 
      * @param password the password to set
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Displays user's name to console 
+     * 
+     * @return String containing user's name
+     */   
     @Override
     public String toString() {
         return "user:"
-                + "\nUser Name = " + userName
-                + "\nPassword = " + password;
+                + "\nUser Name = " + userName;
     }
 }

@@ -74,6 +74,8 @@ public class Flight implements Journey {
     }
     
     /**
+     * Gets origin of the flight
+     * 
      * @return the origin
      */
     public AirPort getOrigin() {
@@ -81,6 +83,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets origin of the flight
+     * 
      * @param origin the origin to set
      */
     public void setOrigin(AirPort origin) {
@@ -88,6 +92,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets destination of the flight
+     * 
      * @return the destination
      */
     public AirPort getDestination() {
@@ -95,6 +101,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets destination of the flight
+     * 
      * @param destination the destination to set
      */
     public void setDestination(AirPort destination) {
@@ -102,6 +110,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets arrival time of the flight
+     * 
      * @return the arrivalTime
      */
     public Time getArrivalTime() {
@@ -109,6 +119,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets arrival time of the flight
+     * 
      * @param arrivalTime the arrivalTime to set
      */
     public void setArrivalTime(Time arrivalTime) {
@@ -116,6 +128,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets departure time of the flight
+     * 
      * @return the departureTime
      */
     public Time getDepartureTime() {
@@ -123,6 +137,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets departure time of the flight
+     * 
      * @param departureTime the departureTime to set
      */
     public void setDepartureTime(Time departureTime) {
@@ -130,6 +146,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the flight number
+     * 
      * @return the flightNumber
      */
     public String getFlightNumber() {
@@ -137,6 +155,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets the flight number
+     * 
      * @param flightNumber the flightNumber to set
      */
     public void setFlightNumber(String flightNumber) {
@@ -144,6 +164,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets aircraft assigned to the flight
+     * 
      * @return the airCraftAssigned
      */
     public AirCraft getAirCraftAssigned() {
@@ -151,6 +173,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets aircraft assigned to the flight
+     * 
      * @param airCraftAssigned the airCraftAssigned to set
      */
     public void setAirCraftAssigned(AirCraft airCraftAssigned) {
@@ -158,6 +182,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the time parser
+     * 
      * @return the timeParser
      */
     public SimpleDateFormat getTimeParser() {
@@ -165,6 +191,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the date parser
+     * 
      * @return the dateParser
      */
     public SimpleDateFormat getDateParser() {
@@ -172,6 +200,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets airlines of the flight
+     * 
      * @return the airLines
      */
     public String getAirLine() {
@@ -179,6 +209,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets airlines for the flight
+     * 
      * @param airLine the airLines to set
      */
     public void setAirLine(String airLine) {
@@ -186,6 +218,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the duration of the flight as a String
+     * 
      * @return the flightDuration
      */
     public String getFlightDuration() {
@@ -193,6 +227,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets the duration of the flight as a String
+     * 
      * @param flightDuration the flightDuration to set
      */
     public void setFlightDuration(String flightDuration) {
@@ -200,6 +236,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the duration of the flight in milliseconds
+     * 
      * @return the flightDurationInMilliseconds
      */
     public long getFlightDurationInMilliseconds() {
@@ -207,6 +245,8 @@ public class Flight implements Journey {
     }
 
     /**
+     * Sets the duration of the flight in milliseconds
+     * 
      * @param flightDurationInMilliseconds the flightDurationInMilliseconds to set
      */
     public void setFlightDurationInMilliseconds(long flightDurationInMilliseconds) {
@@ -214,12 +254,19 @@ public class Flight implements Journey {
     }
 
     /**
+     * Gets the date of the flight
+     * 
      * @return the dateOfFlight
      */
     public Date getDateOfFlight() {
         return dateOfFlight;
     }
     
+    /**
+     * Displays string representation of Flight object to the console
+     * 
+     * @return String containing all the details of the flight
+     */
     @Override
     public String toString() {
         return "=============================================="

@@ -14,7 +14,11 @@ public class Menus {
     public Menus() {
     }
 
-    // Displays main manu of and asks user to choose one of its options
+    /**
+     * Displays main manu of and asks user to choose one of its options
+     * 
+     * @return int representing user's menu choice
+     */
     public int displayMainMenu() {
         boolean invalidInput = true;
         int userChoice = 0;
@@ -51,8 +55,14 @@ public class Menus {
         return userChoice;
     }
 
-    // Displays login menu either for admin or customer which
-    // is defined by the String user passed in as argument
+    /**
+     * Displays login menu either for admin or customer which
+     * is defined by the String user passed in as argument
+     *
+     * @param user is used to determine whether to display menu for admin
+     * or customer
+     * @return int representing user's menu choice
+     */
     public int displayLoginMenu(String user) {
         boolean invalidInput = true;
         int userChoice = 0;
@@ -82,8 +92,12 @@ public class Menus {
         return userChoice;
     }
 
-    // Displays menu for logged in customer
-    public int displayCustomerMenu(JourneyDataBase fdb) {
+    /**
+     * Displays menu for logged in customer
+     *
+     * @return int representing user's menu choice
+     */
+    public int displayCustomerMenu() {
         Scanner scanText = new Scanner(System.in);
         boolean invalidChoice = true;
         int userChoice = 0;
@@ -111,8 +125,12 @@ public class Menus {
         return userChoice;
     }
 
-    // Displays menu for logged in admin
-    public int displayAdminMenu(JourneyDataBase fdb) {
+    /**
+     * Displays menu for logged in admin
+     * 
+     * @return int representing user's menu choice
+     */
+    public int displayAdminMenu() {
         Scanner scanText = new Scanner(System.in);
         boolean invalidChoice = true;
         int userChoice = 0;

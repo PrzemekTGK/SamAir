@@ -18,6 +18,7 @@ public class RandomDateGenerator {
 
     /**
      * Creates a new instance of RandomDateGenerator
+     * 
      * @param min defines minimum date for random date generation
      * @param max defines maximum date for random date generation
      */
@@ -27,8 +28,9 @@ public class RandomDateGenerator {
     }
 
     /**
-     * Generates a random date
-     * @return returns random date object
+     * Generates a random date between today and 1 year from today
+     * 
+     * @return Date object with random date between today and 1 year from today
      */
     public Date generate() {
         // Calculate miliseconds per dey
